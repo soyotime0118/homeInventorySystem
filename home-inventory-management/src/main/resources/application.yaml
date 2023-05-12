@@ -1,0 +1,14 @@
+
+spring:
+  datasource:
+    url: jdbc:h2:~/homedb
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true
