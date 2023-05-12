@@ -1,21 +1,36 @@
 package me.mason.management.ports.in;
 
-import me.mason.management.ports.in.UseInventoryInput.UsingInventoryRequestDto;
-import me.mason.management.ports.in.UseInventoryInput.UsingInventoryResponseDto;
+import me.mason.management.adapter.inventory.fake.FakeInventoryRepository;
+import me.mason.management.application.UseInventory;
+import me.mason.management.domain.Inventory.InventoryId;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class UseInventoryInputTest {
 
-
     UseInventoryInput useInventoryInput;
 
-    @Test
-    void name() {
-
-        UsingInventoryRequestDto usingInventoryRequestDto = new UsingInventoryRequestDto();
-        usingInventoryRequestDto.setInventoryCode(1000L);
-        usingInventoryRequestDto.setUseQuantity(1);
-        UsingInventoryResponseDto inventoryResponseDto = useInventoryInput.usingInventory(usingInventoryRequestDto);
-
+    @BeforeEach
+    void setUp() {
+        FakeInventoryRepository fakeInventoryRepository = new FakeInventoryRepository();
+        fakeInventoryRepository.addData(new InventoryId(1L), "test", 10);
+        fakeInventoryRepository.addData(new InventoryId(2L), "test1", 10);
+        useInventoryInput = new UseInventory(fakeInventoryRepository);
     }
+
+    @DisplayName("재고수량이 여유있을때 1개를 사용하면 남은양을 반환한다")
+    @Test
+    void stockAvailable_whenUseOne_thenReturnRemaining() {
+        int expectedValue = useInventoryInput.usingInventory(new InventoryId(1L), 1);
+        Assertions.assertEquals(expectedValue, 9);
+    }
+
+    @DisplayName("재고수량이 여유있을때 1개를 사용하면 남은양을 반환한다")
+    @Test
+    void stockNotAvailable_whenUseOne_thenThrowException() {
+        int expectedValue = useInventoryInput.usingInventory(new InventoryId(1L), 11);
+    }
+
 }

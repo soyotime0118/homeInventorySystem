@@ -23,21 +23,19 @@ public class UseInventory implements UseInventoryInput {
     /**
      * 재고 사용 처리
      *
-     * @param usingInventoryRequestDto 재고사용요청Dto 재고ID, 사용량을 담고 있다
      * @return 현재 재고량
      */
     @Override
     @Transactional
-    public UsingInventoryResponseDto usingInventory(UsingInventoryRequestDto usingInventoryRequestDto) {
+    public int usingInventory(InventoryId inventoryId, Integer quantity) {
         //현재 재고량 가져 오기
-        Inventory inventory = modifyInventoryStateOutput.loadByInventoryId(
-                new InventoryId(usingInventoryRequestDto.getInventoryCode()));
+        Inventory inventory = modifyInventoryStateOutput.loadByInventoryId(inventoryId);
 
         //재고 사용처리
-        inventory.use(usingInventoryRequestDto.getUseQuantity());
+        inventory.use(quantity.intValue());
 
         modifyInventoryStateOutput.modifyInventory(inventory);
 
-        return new UsingInventoryResponseDto(inventory.getInventoryId().getValue(), inventory.getQuantity());
+        return inventory.getQuantity();
     }
 }

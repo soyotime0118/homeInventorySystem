@@ -1,13 +1,9 @@
 package me.mason.management.adapter.inventory.web;
 
+import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.ports.in.UseInventoryInput;
-import me.mason.management.ports.in.UseInventoryInput.UsingInventoryRequestDto;
-import me.mason.management.ports.in.UseInventoryInput.UsingInventoryResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RequestMapping("inventory")
@@ -22,8 +18,10 @@ public class InventoryRestController {
     }
 
 
-    @PutMapping("use")
-    public UsingInventoryResponseDto useInventory(@RequestBody UsingInventoryRequestDto requestDto) {
-        return useInventoryInput.usingInventory(requestDto);
+    @PatchMapping("use/{inventoryId}/{quantity}")
+    public void useInventory(
+            @PathVariable Long inventoryId,
+            @PathVariable Integer quantity) {
+        useInventoryInput.usingInventory(new InventoryId(inventoryId), quantity);
     }
 }
