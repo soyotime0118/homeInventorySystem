@@ -9,6 +9,10 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+    defer-datasource-initialization: true
   h2:
     console:
       enabled: true
+  sql:
+    init:
+      mode: always
