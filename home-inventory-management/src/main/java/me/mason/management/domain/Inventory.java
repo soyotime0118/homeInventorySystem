@@ -51,7 +51,7 @@ public class Inventory {
      */
     public void use(int useQuantity) {
         if (quantity - useQuantity < 0) {
-            throw new IllegalStateException("수량이부족합니다");
+            throw new NotEnoughStockException(inventoryId, useQuantity);
         }
         quantity = quantity - useQuantity;
     }

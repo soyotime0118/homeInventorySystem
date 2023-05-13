@@ -21,7 +21,7 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
 
     @Override
     public void modifyInventory(Inventory inventory) {
-
+        idInventoryMap.put(inventory.getInventoryId(), inventory);
     }
 
 

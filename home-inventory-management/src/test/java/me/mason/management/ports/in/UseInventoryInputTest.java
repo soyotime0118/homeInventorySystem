@@ -3,6 +3,7 @@ package me.mason.management.ports.in;
 import me.mason.management.adapter.inventory.fake.FakeInventoryRepository;
 import me.mason.management.application.UseInventory;
 import me.mason.management.domain.Inventory.InventoryId;
+import me.mason.management.domain.NotEnoughStockException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,10 +28,12 @@ class UseInventoryInputTest {
         Assertions.assertEquals(expectedValue, 9);
     }
 
-    @DisplayName("재고수량이 여유있을때 1개를 사용하면 남은양을 반환한다")
+    @DisplayName("재고수량 충분하지 않으면 예외발생")
     @Test
     void stockNotAvailable_whenUseOne_thenThrowException() {
-        int expectedValue = useInventoryInput.usingInventory(new InventoryId(1L), 11);
+        Assertions.assertThrowsExactly(NotEnoughStockException.class, () -> {
+            useInventoryInput.usingInventory(new InventoryId(1L), 11);
+        });
     }
 
 }

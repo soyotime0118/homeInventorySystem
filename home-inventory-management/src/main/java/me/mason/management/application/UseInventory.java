@@ -32,7 +32,7 @@ public class UseInventory implements UseInventoryInput {
         Inventory inventory = modifyInventoryStateOutput.loadByInventoryId(inventoryId);
 
         //재고 사용처리
-        inventory.use(quantity.intValue());
+        inventory.use(quantity);
 
         modifyInventoryStateOutput.modifyInventory(inventory);
 
