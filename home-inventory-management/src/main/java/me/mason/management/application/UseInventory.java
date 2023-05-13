@@ -13,12 +13,12 @@ import javax.transaction.Transactional;
 @Service
 public class UseInventory implements UseInventoryInput {
 
-    private final ModifyInventoryStateOutput modifyInventoryStateOutput;
+    private final ModifyInventoryStateOutput inventoryPersistentRepository;
 
 
     @Autowired
-    public UseInventory(ModifyInventoryStateOutput modifyInventoryStateOutput) {
-        this.modifyInventoryStateOutput = modifyInventoryStateOutput;
+    public UseInventory(ModifyInventoryStateOutput inventoryPersistentRepository) {
+        this.inventoryPersistentRepository = inventoryPersistentRepository;
     }
 
     /**
@@ -30,13 +30,13 @@ public class UseInventory implements UseInventoryInput {
     @Transactional
     public int usingInventory(InventoryId inventoryId, Integer quantity) {
         //id기준으로 Inventory 가져오기
-        Inventory inventory = modifyInventoryStateOutput.loadByInventoryId(inventoryId)
+        Inventory inventory = inventoryPersistentRepository.loadByInventoryId(inventoryId)
                 .orElseThrow(() -> new NotFindStockException(inventoryId));
 
         //재고 사용처리
         inventory.use(quantity);
 
-        modifyInventoryStateOutput.modifyInventory(inventory);
+        inventoryPersistentRepository.modifyInventory(inventory);
 
         return inventory.getQuantity();
     }

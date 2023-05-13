@@ -1,18 +1,46 @@
-
 spring:
-  datasource:
-    url: jdbc:h2:~/homedb
-    username: sa
-    password:
-    driverClassName: org.h2.Driver
+  profiles:
+    active: local
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      mode: never
+---
+spring:
+  config:
+    activate:
+      on-profile: local
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
+  datasource:
+    url: jdbc:h2:~/homedb
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
   h2:
     console:
       enabled: true
   sql:
     init:
       mode: always
+
+---
+spring:
+  config:
+    activate:
+      on-profile: develop
+  datasource:
+    url: jdbc:mysql://localhost:3306/homedb
+    username: sa
+    password: mycat123
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none

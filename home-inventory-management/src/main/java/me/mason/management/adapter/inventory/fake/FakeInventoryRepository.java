@@ -3,12 +3,13 @@ package me.mason.management.adapter.inventory.fake;
 import me.mason.management.domain.Inventory;
 import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.ports.out.ModifyInventoryStateOutput;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-//@Service
+@Service
 public class FakeInventoryRepository implements ModifyInventoryStateOutput {
 
     private Map<InventoryId, Inventory> idInventoryMap = new HashMap<>();
