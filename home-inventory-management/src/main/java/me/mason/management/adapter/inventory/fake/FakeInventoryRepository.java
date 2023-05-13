@@ -6,6 +6,7 @@ import me.mason.management.ports.out.ModifyInventoryStateOutput;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 //@Service
 public class FakeInventoryRepository implements ModifyInventoryStateOutput {
@@ -26,8 +27,8 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
 
 
     @Override
-    public Inventory loadByInventoryId(InventoryId inventoryId) {
-        return idInventoryMap.get(inventoryId);
+    public Optional<Inventory> loadByInventoryId(InventoryId inventoryId) {
+        return Optional.ofNullable(idInventoryMap.get(inventoryId));
     }
 
     public void addData(InventoryId id, String name, int quantity) {

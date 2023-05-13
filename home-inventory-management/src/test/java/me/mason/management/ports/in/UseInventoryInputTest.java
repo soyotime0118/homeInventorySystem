@@ -36,4 +36,12 @@ class UseInventoryInputTest {
         });
     }
 
+    @DisplayName("사용하려는 재고가 존재하지 않으면 예외 발생")
+    @Test
+    void notFindStock_whenUseOne_thenThrowException() {
+        Assertions.assertThrowsExactly(NotFindStockException.class, () -> {
+            useInventoryInput.usingInventory(new InventoryId(3L), 1);
+        });
+    }
+
 }

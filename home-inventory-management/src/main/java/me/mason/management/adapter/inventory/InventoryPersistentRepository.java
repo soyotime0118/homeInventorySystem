@@ -6,6 +6,8 @@ import me.mason.management.ports.out.ModifyInventoryStateOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class InventoryPersistentRepository implements ModifyInventoryStateOutput {
 
@@ -29,7 +31,8 @@ public class InventoryPersistentRepository implements ModifyInventoryStateOutput
     }
 
     @Override
-    public Inventory loadByInventoryId(InventoryId inventoryId) {
-        return inventoryMapper.mapToDomain(inventoryJpaRepository.findById(inventoryId.getValue()).orElseThrow());
+    public Optional<Inventory> loadByInventoryId(InventoryId inventoryId) {
+        return inventoryJpaRepository.findById(inventoryId.getValue())
+                .map(inventoryMapper::mapToDomain);
     }
 }
