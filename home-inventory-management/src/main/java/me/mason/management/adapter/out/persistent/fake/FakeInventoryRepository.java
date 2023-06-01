@@ -1,4 +1,4 @@
-package me.mason.management.adapter.inventory.fake;
+package me.mason.management.adapter.out.persistent.fake;
 
 import me.mason.management.domain.Inventory;
 import me.mason.management.domain.Inventory.InventoryId;

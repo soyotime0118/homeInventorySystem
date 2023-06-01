@@ -1,5 +1,6 @@
-package me.mason.management.adapter.inventory;
+package me.mason.management.adapter.out.persistent;
 
+import me.mason.management.adapter.out.persistent.entity.InventoryEntity;
 import me.mason.management.domain.Inventory;
 import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.ports.out.ModifyInventoryStateOutput;

@@ -1,4 +1,4 @@
-package me.mason.management.adapter.inventory;
+package me.mason.management.adapter.out.persistent.entity;
 
 
 import lombok.AllArgsConstructor;

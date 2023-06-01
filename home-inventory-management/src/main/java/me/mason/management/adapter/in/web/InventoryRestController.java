@@ -1,4 +1,4 @@
-package me.mason.management.adapter.inventory.web;
+package me.mason.management.adapter.in.web;
 
 import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.ports.in.UseInventoryInput;
