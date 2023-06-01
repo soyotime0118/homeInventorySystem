@@ -57,7 +57,7 @@ public class Inventory {
     }
 
 
-    @Value
+    @Value(staticConstructor = "of")
     public static class InventoryId {
         Long value;
     }

@@ -22,6 +22,6 @@ public class InventoryRestController {
     public void useInventory(
             @PathVariable Long inventoryId,
             @PathVariable Integer quantity) {
-        useInventoryInput.usingInventory(new InventoryId(inventoryId), quantity);
+        useInventoryInput.usingInventory(InventoryId.of(inventoryId), quantity);
     }
 }
