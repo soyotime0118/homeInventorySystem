@@ -1,6 +1,7 @@
 package me.mason.management.application;
 
 import me.mason.management.domain.Inventory;
+import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.domain.NotEnoughStockException;
 import me.mason.management.ports.in.NotFindStockException;
 import me.mason.management.ports.in.UseInventoryInput;
@@ -38,7 +39,7 @@ class UseInventoryTest {
     @DisplayName("특정 재고1개사용 후 반환갯수확인")
     @Test
     void checkRemainingStockAfterUseOne() {
-        int expectedValue = useInventory.usingInventory(new Inventory.InventoryId(2L), 1);
+        int expectedValue = useInventory.usingInventory(InventoryId.of(2L), 1);
         int actualValue = 9;
 
         Assertions.assertEquals(expectedValue, actualValue);
@@ -48,7 +49,7 @@ class UseInventoryTest {
     @Test
     void throwNotEnoughStockAfterUseOne() {
         Assertions.assertThrows(NotEnoughStockException.class, () -> {
-            useInventory.usingInventory(new Inventory.InventoryId(2L), 11);
+            useInventory.usingInventory(InventoryId.of(2L), 11);
         });
     }
 
@@ -56,7 +57,7 @@ class UseInventoryTest {
     @Test
     void throwNotFindStockAfterUseOne() {
         Assertions.assertThrows(NotFindStockException.class, () -> {
-            useInventory.usingInventory(new Inventory.InventoryId(3L), 1);
+            useInventory.usingInventory(InventoryId.of(3L), 1);
         });
     }
 
