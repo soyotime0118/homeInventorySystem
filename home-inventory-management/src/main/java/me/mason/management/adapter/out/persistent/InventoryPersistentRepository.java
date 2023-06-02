@@ -28,7 +28,7 @@ public class InventoryPersistentRepository implements ModifyInventoryStateOutput
 
         InventoryEntity inventoryEntity = inventoryMapper.mapToJpaEntity(inventory);
 
-        inventoryJpaRepository.save(inventoryEntity);
+        inventoryJpaRepository.saveAndFlush(inventoryEntity);
     }
 
     @Override

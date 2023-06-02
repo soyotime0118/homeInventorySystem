@@ -1,5 +1,6 @@
 package me.mason.management.application;
 
+import me.mason.management.config.RedissonTransactional;
 import me.mason.management.domain.Inventory;
 import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.ports.in.NotFindStockException;
@@ -27,7 +28,7 @@ public class UseInventory implements UseInventoryInput {
      * @return
      */
     @Override
-    @Transactional
+    @RedissonTransactional(keyName = "orderProduct:")
     public int usingInventory(InventoryId inventoryId, Integer quantity) {
         //id기준으로 Inventory 가져오기
         Inventory inventory = inventoryPersistentRepository.loadByInventoryId(inventoryId)

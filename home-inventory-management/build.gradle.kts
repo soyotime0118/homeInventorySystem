@@ -21,6 +21,12 @@ repositories {
 }
 
 dependencies {
+
+    implementation("it.ozimov:embedded-redis:0.7.2")
+    testImplementation("it.ozimov:embedded-redis:0.7.2")
+    implementation("org.redisson:redisson-spring-boot-starter:3.18.0")
+    testImplementation("org.redisson:redisson-spring-boot-starter:3.18.0")
+
     implementation("mysql:mysql-connector-java:8.0.33")
     implementation("com.h2database:h2:2.1.212")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
