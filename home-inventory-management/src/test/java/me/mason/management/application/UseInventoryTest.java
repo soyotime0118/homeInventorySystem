@@ -1,5 +1,6 @@
 package me.mason.management.application;
 
+import me.mason.management.application.exception.InventoryManagementException;
 import me.mason.management.domain.Inventory;
 import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.ports.in.UseInventoryInput;
