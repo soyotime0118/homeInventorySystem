@@ -3,12 +3,14 @@ package me.mason.management.adapter.out.persistent.fake;
 import me.mason.management.domain.Inventory;
 import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.ports.out.ModifyInventoryStateOutput;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Profile("fake-inventory")
 @Service
 public class FakeInventoryRepository implements ModifyInventoryStateOutput {
 

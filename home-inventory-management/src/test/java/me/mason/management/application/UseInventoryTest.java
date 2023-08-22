@@ -13,6 +13,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -39,6 +41,8 @@ class UseInventoryTest {
         //멀티스레드 이용 ExecutorService : 비동기를 단순하게 처리할 수 있또록 해주는 java api
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 
+        Map<String, Exception> managementExceptionIntegerMap = new ConcurrentHashMap<>();
+
         //다른 스레드에서 수행이 완료될 때 까지 대기할 수 있도록 도와주는 API - 요청이 끝날때 까지 기다림
         CountDownLatch latch = new CountDownLatch(threadCount);
 
@@ -46,6 +50,8 @@ class UseInventoryTest {
             executorService.execute(() -> {
                 try {
                     useInventory.usingInventory(InventoryId.of(2L), 1);
+                } catch (Exception e) {
+                    managementExceptionIntegerMap.put(Thread.currentThread().getName(), e);
                 } finally {
                     latch.countDown();
                 }
@@ -57,9 +63,23 @@ class UseInventoryTest {
 
         Inventory inventory = inventoryPersistentRepository.loadByInventoryId(InventoryId.of(2L))
                 .orElseThrow();
+        long exceptionOccurred = managementExceptionIntegerMap.values().stream()
+                .filter(InventoryManagementException.class::isInstance)
+                .count();
+        long expectedSuccessCnt = threadCount - exceptionOccurred;
 
         //100 - (1*100) = 0
-        Assertions.assertEquals(0, inventory.getQuantity());
+        long actualQuantity = inventory.getQuantity();
+
+        long notExceptionOccurred = managementExceptionIntegerMap.values().stream()
+                .filter(obj -> !InventoryManagementException.class.isInstance(obj))
+                .peek(e -> System.out.println(e.toString()))
+                .count();
+        System.out.println(notExceptionOccurred);
+
+        Assertions.assertEquals(expectedSuccessCnt, actualQuantity,
+                String.format("\n%s\t:\t%d\n%s\t:\t%d", "차감성공횟수", expectedSuccessCnt, "실제재고", actualQuantity));
+
 
     }
 

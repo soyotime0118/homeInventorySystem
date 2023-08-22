@@ -8,8 +8,8 @@ import me.mason.management.ports.in.UseInventoryInput;
 import me.mason.management.ports.out.ModifyInventoryStateOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 @Service
 public class UseInventory implements UseInventoryInput {
@@ -28,7 +28,7 @@ public class UseInventory implements UseInventoryInput {
      * @return
      */
     @Override
-    @RedissonTransactional(keyName = "orderProduct:")
+    @RedissonTransactional(keyName = "orderProduct:", leaseTimeSecond = 10, waitTime = 1)
     public int usingInventory(InventoryId inventoryId, Integer quantity) {
         //id기준으로 Inventory 가져오기
         Inventory inventory = inventoryPersistentRepository.loadByInventoryId(inventoryId)
