@@ -56,6 +56,10 @@ public class Inventory {
         quantity = quantity - useQuantity;
     }
 
+    public void plusStock(Integer quantity) {
+        this.quantity += quantity;
+    }
+
 
     @Value(staticConstructor = "of")
     public static class InventoryId {
