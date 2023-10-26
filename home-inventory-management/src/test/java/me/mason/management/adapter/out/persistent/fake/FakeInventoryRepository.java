@@ -5,6 +5,7 @@ import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.ports.out.ModifyInventoryStateOutput;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -32,7 +33,7 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
         return Optional.ofNullable(idInventoryMap.get(inventoryId));
     }
 
-    public void addData(InventoryId id, String name, int quantity) {
-        idInventoryMap.put(id, Inventory.withId(id, name, quantity));
+    public void addData(InventoryId id, String name, int quantity, LocalDateTime lastPurchase) {
+        idInventoryMap.put(id, Inventory.withId(id, name, quantity, lastPurchase));
     }
 }

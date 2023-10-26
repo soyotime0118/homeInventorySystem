@@ -12,11 +12,12 @@ public class InventoryMapper {
         return Inventory.withId(
                 InventoryId.of(inventoryEntity.getId()),
                 inventoryEntity.getName(),
-                inventoryEntity.getQuantity());
+                inventoryEntity.getQuantity(),
+                inventoryEntity.getLastPurchase());
     }
 
     public InventoryEntity mapToJpaEntity(Inventory inventory) {
         return new InventoryEntity(
-                inventory.getInventoryId().getValue(), inventory.getName(), inventory.getQuantity());
+                inventory.getInventoryId().getValue(), inventory.getName(), inventory.getQuantity(), inventory.getLastPurchase());
     }
 }
