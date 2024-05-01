@@ -1,16 +1,15 @@
-package me.mason.management.adapter.out.persistent.fake;
+package me.mason.fake;
 
 import me.mason.management.domain.Inventory;
 import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.ports.out.ModifyInventoryStateOutput;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@Service
 public class FakeInventoryRepository implements ModifyInventoryStateOutput {
 
     private Map<InventoryId, Inventory> idInventoryMap = new HashMap<>();
@@ -31,6 +30,18 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
     @Override
     public Optional<Inventory> loadByInventoryId(InventoryId inventoryId) {
         return Optional.ofNullable(idInventoryMap.get(inventoryId));
+    }
+
+    @Override
+    public void addInventory(Inventory inventory) {
+        if (inventory.getInventoryId() == null) {
+            if (idInventoryMap.isEmpty()) {
+                idInventoryMap.put(InventoryId.of(1L), inventory);
+            } else {
+                long nextId = idInventoryMap.keySet().stream().min(Comparator.comparing(InventoryId::getValue)).get().getValue();
+                idInventoryMap.put(InventoryId.of(nextId), inventory);
+            }
+        }
     }
 
     public void addData(InventoryId id, String name, int quantity, LocalDateTime lastPurchase) {
