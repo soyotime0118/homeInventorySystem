@@ -36,4 +36,11 @@ public class InventoryPersistentRepository implements ModifyInventoryStateOutput
         return inventoryJpaRepository.findById(inventoryId.getValue())
                 .map(inventoryMapper::mapToDomain);
     }
+
+    @Override
+    public void addInventory(Inventory inventory) {
+        InventoryEntity inventoryEntity = inventoryMapper.mapToJpaEntity(inventory);
+        inventoryJpaRepository.save(inventoryEntity);
+
+    }
 }

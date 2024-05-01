@@ -2,15 +2,13 @@ package me.mason.management.application;
 
 import me.mason.management.domain.Inventory;
 import me.mason.management.domain.Inventory.InventoryId;
-import me.mason.management.domain.NotEnoughStockException;
-import me.mason.management.ports.in.NotFindStockException;
 import me.mason.management.ports.in.UseInventoryInput;
 import me.mason.management.ports.out.ModifyInventoryStateOutput;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -33,6 +31,7 @@ class UseInventoryTest {
     @Autowired
     UseInventoryInput useInventory;
 
+    @Qualifier("fakeInventoryRepository")
     @Autowired
     ModifyInventoryStateOutput inventoryPersistentRepository;
 

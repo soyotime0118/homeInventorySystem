@@ -35,4 +35,9 @@ public class InventoryRestController {
             @PathVariable Integer quantity) {
         purchaseInventoryInput.purchaseInventory(InventoryId.of(inventoryId), quantity);
     }
+
+    @PostMapping("purchase/")
+    public void purchaseInventory(@RequestBody PurchaseNewInventoryCommand command) {
+        purchaseInventoryInput.purchaseNewInventory(command);
+    }
 }

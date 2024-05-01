@@ -1,6 +1,6 @@
 package me.mason.management.application;
 
-import me.mason.management.adapter.out.persistent.fake.FakeInventoryRepository;
+import me.mason.fake.FakeInventoryRepository;
 import me.mason.management.domain.Inventory;
 import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.domain.NotEnoughStockException;
