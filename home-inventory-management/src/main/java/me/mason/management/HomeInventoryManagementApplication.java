@@ -1,6 +1,6 @@
 package me.mason.management;
 
-import me.mason.fake.EnableStubAutoConfiguration;
+import me.mason.config.EnableStubAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

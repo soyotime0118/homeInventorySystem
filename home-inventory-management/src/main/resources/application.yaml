@@ -1,3 +1,6 @@
+fake:
+  repository: true
+
 spring:
   profiles:
     active: local

@@ -1,6 +1,7 @@
-package me.mason.fake;
+package me.mason.config;
 
 import lombok.RequiredArgsConstructor;
+import me.mason.fake.StubAutoConfiguration;
 import org.springframework.boot.context.annotation.ImportCandidates;
 import org.springframework.context.annotation.DeferredImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
@@ -16,9 +17,5 @@ public class StubAutoConfigImportSelector implements DeferredImportSelector {
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
         ImportCandidates candidates = ImportCandidates.load(StubAutoConfiguration.class, classLoader);
         return StreamSupport.stream(candidates.spliterator(), false).toArray(String[]::new);
-
-//        return new String[]{
-//                "me.mason.fake.autoconfig.FakeInventoryRepositoryConfig"
-//        };
     }
 }

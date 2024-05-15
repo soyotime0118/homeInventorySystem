@@ -1,4 +1,4 @@
-package me.mason.fake;
+package me.mason.config;
 
 import org.springframework.context.annotation.Import;
 
