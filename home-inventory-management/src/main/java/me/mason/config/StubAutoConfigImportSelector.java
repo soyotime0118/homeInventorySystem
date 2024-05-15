@@ -15,7 +15,14 @@ public class StubAutoConfigImportSelector implements DeferredImportSelector {
 
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-        ImportCandidates candidates = ImportCandidates.load(StubAutoConfiguration.class, classLoader);
-        return StreamSupport.stream(candidates.spliterator(), false).toArray(String[]::new);
+        boolean enableStub = (boolean) importingClassMetadata.getAnnotationAttributes(EnableStubAutoConfiguration.class.getName())
+                .get("enableStub");
+        if (enableStub) {
+            ImportCandidates candidates = ImportCandidates.load(StubAutoConfiguration.class, classLoader);
+            return StreamSupport.stream(candidates.spliterator(), false).toArray(String[]::new);
+        }
+        else {
+            return new String[]{};
+        }
     }
 }

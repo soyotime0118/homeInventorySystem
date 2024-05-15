@@ -64,6 +64,7 @@ public class Inventory {
 
     public void plusStock(Integer quantity) {
         this.quantity += quantity;
+        this.lastPurchase = LocalDateTime.now();
     }
 
 
