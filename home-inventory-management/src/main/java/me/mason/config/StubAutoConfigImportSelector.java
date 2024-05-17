@@ -1,7 +1,6 @@
 package me.mason.config;
 
 import lombok.RequiredArgsConstructor;
-import me.mason.fake.StubAutoConfiguration;
 import org.springframework.boot.context.annotation.ImportCandidates;
 import org.springframework.context.annotation.DeferredImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
@@ -15,13 +14,12 @@ public class StubAutoConfigImportSelector implements DeferredImportSelector {
 
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-        boolean enableStub = (boolean) importingClassMetadata.getAnnotationAttributes(EnableStubAutoConfiguration.class.getName())
+        Boolean enableStub = (Boolean) importingClassMetadata.getAnnotationAttributes(EnableStubAutoConfiguration.class.getName())
                 .get("enableStub");
         if (enableStub) {
             ImportCandidates candidates = ImportCandidates.load(StubAutoConfiguration.class, classLoader);
             return StreamSupport.stream(candidates.spliterator(), false).toArray(String[]::new);
-        }
-        else {
+        } else {
             return new String[]{};
         }
     }

@@ -50,6 +50,7 @@ class InventoryRepositoryConfigTest {
 
     static class MyBean {
     }
+
     static class TrueCondition implements Condition {
         @Override
         public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
@@ -67,14 +68,15 @@ class InventoryRepositoryConfigTest {
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
     @Conditional(BooleanCondition.class)
-    @interface BooleanConditional{
+    @interface BooleanConditional {
         boolean value();
 
     }
+
     static class BooleanCondition implements Condition {
         @Override
         public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-            Map<String,Object> annotationAttributes = metadata.getAnnotationAttributes(BooleanConditional.class.getName());
+            Map<String, Object> annotationAttributes = metadata.getAnnotationAttributes(BooleanConditional.class.getName());
             return (boolean) annotationAttributes.get("value");
         }
     }

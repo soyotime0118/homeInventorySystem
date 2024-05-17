@@ -14,9 +14,9 @@ import java.lang.annotation.Target;
 public @interface EnableStubAutoConfiguration {
 
     @AliasFor("enableStub")
-    boolean value() default false;
+    boolean value() default true;
 
     @AliasFor("value")
-    boolean enableStub() default false;
+    boolean enableStub() default true;
 
 }
