@@ -72,4 +72,14 @@ public class Inventory {
     public static class InventoryId {
         Long value;
     }
+
+    @Override
+    public String toString() {
+        return "Inventory{" +
+               "inventoryId=" + inventoryId +
+               ", name='" + name + '\'' +
+               ", quantity=" + quantity +
+               ", lastPurchase=" + lastPurchase +
+               '}';
+    }
 }

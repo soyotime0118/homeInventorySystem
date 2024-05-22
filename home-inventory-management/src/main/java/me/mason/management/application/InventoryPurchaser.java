@@ -28,11 +28,11 @@ public class InventoryPurchaser implements PurchaseInventoryInput {
     }
 
     @Override
-    public void purchaseNewInventory(PurchaseNewInventoryCommand command) {
+    public InventoryId purchaseNewInventory(PurchaseNewInventoryCommand command) {
 
         Inventory inventory = Inventory.withoutId(command.getName(), command.getQuantity(), LocalDateTime.now());
 
-        inventoryPersistentRepository.addInventory(inventory);
+        return inventoryPersistentRepository.addInventory(inventory);
 
     }
 }

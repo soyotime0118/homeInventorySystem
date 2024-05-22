@@ -33,15 +33,20 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
     }
 
     @Override
-    public void addInventory(Inventory inventory) {
+    public InventoryId addInventory(Inventory inventory) {
+        InventoryId nextId;
         if (inventory.getInventoryId() == null) {
             if (idInventoryMap.isEmpty()) {
-                idInventoryMap.put(InventoryId.of(1L), inventory);
+                nextId = InventoryId.of(1L);
             } else {
-                long nextId = idInventoryMap.keySet().stream().min(Comparator.comparing(InventoryId::getValue)).get().getValue();
-                idInventoryMap.put(InventoryId.of(nextId), inventory);
+                nextId = InventoryId.of(idInventoryMap.keySet().stream().max(Comparator.comparing(InventoryId::getValue)).get().getValue() + 1);
             }
+            inventory = Inventory.withId(nextId, inventory.getName(), inventory.getQuantity(), inventory.getLastPurchase());
+            idInventoryMap.put(nextId, inventory);
+        } else {
+            nextId = inventory.getInventoryId();
         }
+        return nextId;
     }
 
     public void addData(InventoryId id, String name, int quantity, LocalDateTime lastPurchase) {
