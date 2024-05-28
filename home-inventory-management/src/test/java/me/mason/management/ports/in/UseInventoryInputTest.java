@@ -1,6 +1,6 @@
 package me.mason.management.ports.in;
 
-import me.mason.management.adapter.out.persistent.fake.FakeInventoryRepository;
+import me.mason.fake.FakeInventoryRepository;
 import me.mason.management.application.UseInventory;
 import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.domain.NotEnoughStockException;
@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 class UseInventoryInputTest {
 
     UseInventoryInput useInventoryInput;
@@ -16,8 +18,8 @@ class UseInventoryInputTest {
     @BeforeEach
     void setUp() {
         FakeInventoryRepository fakeInventoryRepository = new FakeInventoryRepository();
-        fakeInventoryRepository.addData(InventoryId.of(1L), "test", 10);
-        fakeInventoryRepository.addData(InventoryId.of(2L), "test1", 10);
+        fakeInventoryRepository.addData(InventoryId.of(1L), "test", 10, LocalDateTime.now());
+        fakeInventoryRepository.addData(InventoryId.of(2L), "test1", 10, LocalDateTime.now());
         useInventoryInput = new UseInventory(fakeInventoryRepository);
     }
 

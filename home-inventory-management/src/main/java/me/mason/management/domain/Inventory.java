@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Value;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 public class Inventory {
@@ -14,6 +16,8 @@ public class Inventory {
     private String name;
 
     private int quantity;
+
+    private LocalDateTime lastPurchase;
 
 
     /**
@@ -27,8 +31,9 @@ public class Inventory {
     public static Inventory withId(
             InventoryId inventoryId,
             String name,
-            int quantity) {
-        return new Inventory(inventoryId, name, quantity);
+            int quantity,
+            LocalDateTime lastPurchase) {
+        return new Inventory(inventoryId, name, quantity, lastPurchase);
     }
 
     /**
@@ -40,8 +45,9 @@ public class Inventory {
     @Builder(builderMethodName = "withoutId")
     public static Inventory withoutId(
             String name,
-            int quantity) {
-        return new Inventory(null, name, quantity);
+            int quantity,
+            LocalDateTime lastPurchase) {
+        return new Inventory(null, name, quantity, lastPurchase);
     }
 
     /**
@@ -58,11 +64,22 @@ public class Inventory {
 
     public void plusStock(Integer quantity) {
         this.quantity += quantity;
+        this.lastPurchase = LocalDateTime.now();
     }
 
 
     @Value(staticConstructor = "of")
     public static class InventoryId {
         Long value;
+    }
+
+    @Override
+    public String toString() {
+        return "Inventory{" +
+               "inventoryId=" + inventoryId +
+               ", name='" + name + '\'' +
+               ", quantity=" + quantity +
+               ", lastPurchase=" + lastPurchase +
+               '}';
     }
 }

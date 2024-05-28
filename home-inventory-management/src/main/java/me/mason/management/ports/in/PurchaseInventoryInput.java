@@ -1,5 +1,6 @@
 package me.mason.management.ports.in;
 
+import me.mason.management.adapter.in.web.PurchaseNewInventoryCommand;
 import me.mason.management.domain.Inventory.InventoryId;
 
 public interface PurchaseInventoryInput {
@@ -11,4 +12,9 @@ public interface PurchaseInventoryInput {
      * @param quantity    수량
      */
     void purchaseInventory(InventoryId inventoryId, Integer quantity);
+
+    /**
+     * 신규 재고 구입 처리
+     */
+    InventoryId purchaseNewInventory(PurchaseNewInventoryCommand command);
 }

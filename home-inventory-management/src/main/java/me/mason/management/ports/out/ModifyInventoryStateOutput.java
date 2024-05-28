@@ -13,4 +13,5 @@ public interface ModifyInventoryStateOutput {
 
     Optional<Inventory> loadByInventoryId(InventoryId inventoryId);
 
+    InventoryId addInventory(Inventory inventory);
 }
