@@ -21,7 +21,10 @@ public class InventoryPurchaser implements PurchaseInventoryInput {
     }
 
     @Override
-    public void purchaseInventory(InventoryId inventoryId, Integer quantity) {
+    public void purchaseInventory(InventoryId inventoryId, int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("quantity must not be less than 0");
+        }
         Inventory inventory = inventoryPersistentRepository.loadByInventoryId(inventoryId).orElseThrow();
         inventory.plusStock(quantity);
         inventoryPersistentRepository.modifyInventory(inventory);

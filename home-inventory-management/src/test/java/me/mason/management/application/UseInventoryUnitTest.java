@@ -50,4 +50,12 @@ class UseInventoryUnitTest {
             useInventory.usingInventory(InventoryId.of(1L), 101);
         });
     }
+
+    @DisplayName("재고 사용시 재고수량이 0인경우")
+    @Test
+    void useInventoryQuantity2() {
+        Assertions.assertThrowsExactly(IllegalArgumentException.class, () -> {
+            useInventory.usingInventory(InventoryId.of(1L), 0);
+        });
+    }
 }

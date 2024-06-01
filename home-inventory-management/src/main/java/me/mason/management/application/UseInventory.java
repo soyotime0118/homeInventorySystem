@@ -24,11 +24,15 @@ public class UseInventory implements UseInventoryInput {
     /**
      * @param inventoryId 사용처리하는 재고ID
      * @param quantity    수량
-     * @return
+     * @return 변경된 재고의 수량
+     * @throws IllegalArgumentException 수량이 0이하일 경우
      */
     @Override
     @Transactional
-    public int usingInventory(InventoryId inventoryId, Integer quantity) {
+    public int usingInventory(InventoryId inventoryId, int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be greater than 0");
+        }
         //id기준으로 Inventory 가져오기
         Inventory inventory = inventoryPersistentRepository.loadByInventoryId(inventoryId)
                 .orElseThrow(() -> new NotFindStockException(inventoryId));

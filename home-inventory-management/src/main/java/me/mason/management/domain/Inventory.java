@@ -41,12 +41,16 @@ public class Inventory {
      *
      * @param name     인벤토리 이름
      * @param quantity 수량
+     * @throws IllegalArgumentException quantity가 음수인경우 발생
      */
     @Builder(builderMethodName = "withoutId")
     public static Inventory withoutId(
             String name,
             int quantity,
             LocalDateTime lastPurchase) {
+        if (quantity < 0) {
+            throw new IllegalArgumentException("quantity must be greater than -1");
+        }
         return new Inventory(null, name, quantity, lastPurchase);
     }
 

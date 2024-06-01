@@ -10,8 +10,9 @@ public interface PurchaseInventoryInput {
      *
      * @param inventoryId 사용처리하는 재고ID
      * @param quantity    수량
+     * @throws IllegalArgumentException quantity 가 0 이하인 경우 발생
      */
-    void purchaseInventory(InventoryId inventoryId, Integer quantity);
+    void purchaseInventory(InventoryId inventoryId, int quantity);
 
     /**
      * 신규 재고 구입 처리
