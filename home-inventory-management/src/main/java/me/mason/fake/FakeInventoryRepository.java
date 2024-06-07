@@ -41,7 +41,12 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
             } else {
                 nextId = InventoryId.of(idInventoryMap.keySet().stream().max(Comparator.comparing(InventoryId::getValue)).get().getValue() + 1);
             }
-            inventory = Inventory.withId(nextId, inventory.getName(), inventory.getQuantity(), inventory.getLastPurchase());
+            inventory = Inventory.withId(
+                    nextId,
+                    inventory.getName(),
+                    inventory.getQuantity(),
+                    inventory.getLocation(),
+                    inventory.getLastPurchase());
             idInventoryMap.put(nextId, inventory);
         } else {
             nextId = inventory.getInventoryId();
@@ -49,7 +54,7 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
         return nextId;
     }
 
-    public void addData(InventoryId id, String name, int quantity, LocalDateTime lastPurchase) {
-        idInventoryMap.put(id, Inventory.withId(id, name, quantity, lastPurchase));
+    public void addData(InventoryId id, String name, int quantity, String location, LocalDateTime lastPurchase) {
+        idInventoryMap.put(id, Inventory.withId(id, name, quantity, location, lastPurchase));
     }
 }

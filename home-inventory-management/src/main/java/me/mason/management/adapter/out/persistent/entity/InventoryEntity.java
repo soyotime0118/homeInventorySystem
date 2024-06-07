@@ -25,5 +25,7 @@ public class InventoryEntity {
 
     private int quantity;
 
+    private String location;
+
     private LocalDateTime lastPurchase;
 }
