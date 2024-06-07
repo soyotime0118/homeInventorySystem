@@ -1,14 +1,12 @@
 package me.mason.management.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Inventory {
 
     private InventoryId inventoryId;
@@ -16,6 +14,8 @@ public class Inventory {
     private String name;
 
     private int quantity;
+
+    private String location;
 
     private LocalDateTime lastPurchase;
 
@@ -32,8 +32,12 @@ public class Inventory {
             InventoryId inventoryId,
             String name,
             int quantity,
+            String location,
             LocalDateTime lastPurchase) {
-        return new Inventory(inventoryId, name, quantity, lastPurchase);
+        if (quantity < 0) {
+            throw new IllegalArgumentException("quantity must be greater than -1");
+        }
+        return new Inventory(inventoryId, name, quantity, location, lastPurchase);
     }
 
     /**
@@ -47,11 +51,12 @@ public class Inventory {
     public static Inventory withoutId(
             String name,
             int quantity,
+            String location,
             LocalDateTime lastPurchase) {
         if (quantity < 0) {
             throw new IllegalArgumentException("quantity must be greater than -1");
         }
-        return new Inventory(null, name, quantity, lastPurchase);
+        return new Inventory(null, name, quantity,location, lastPurchase);
     }
 
     /**

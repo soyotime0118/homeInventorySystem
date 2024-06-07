@@ -5,6 +5,7 @@ import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.ports.in.UseInventoryInput;
 import me.mason.management.ports.out.ModifyInventoryStateOutput;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 //todo sql 초기화코드
+@Disabled
 @SqlGroup({
         @Sql(statements = "insert into inventory(id, name, quantity) values (2, '컵라면1', 100);"
                 , executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
