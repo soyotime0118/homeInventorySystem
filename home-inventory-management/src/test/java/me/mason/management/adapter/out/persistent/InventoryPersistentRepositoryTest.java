@@ -1,7 +1,6 @@
 package me.mason.management.adapter.out.persistent;
 
 import me.mason.management.adapter.out.persistent.entity.InventoryEntity;
-import me.mason.management.domain.Inventory;
 import me.mason.management.domain.Inventory.InventoryId;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -11,8 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDateTime;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
