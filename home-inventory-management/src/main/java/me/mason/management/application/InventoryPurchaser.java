@@ -33,8 +33,9 @@ public class InventoryPurchaser implements PurchaseInventoryInput {
     @Override
     public InventoryId purchaseNewInventory(PurchaseNewInventoryCommand command) {
 
-        return inventoryPersistentRepository.addInventory(
-                command.getName(), command.getQuantity(), command.getLocation());
+        Inventory inventory = Inventory.withoutId(command.getName(), command.getQuantity(), command.getLocation(), LocalDateTime.now());
+
+        return inventoryPersistentRepository.addInventory(inventory);
 
     }
 }

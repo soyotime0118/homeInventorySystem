@@ -19,8 +19,7 @@ public class InventoryMapper {
 
     public InventoryEntity mapToJpaEntity(Inventory inventory) {
         return new InventoryEntity(
-                //todo 새로 추가하는 경우 inventoryId가 null 인데 이렇게 처리하는게 맞는지 확인필요
-                inventory.getInventoryId() == null ? null : inventory.getInventoryId().getValue(),
+                inventory.getInventoryId().getValue(),
                 inventory.getName(),
                 inventory.getQuantity(),
                 inventory.getLocation(),
