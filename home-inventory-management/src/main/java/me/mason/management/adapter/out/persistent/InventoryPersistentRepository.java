@@ -7,6 +7,7 @@ import me.mason.management.ports.out.ModifyInventoryStateOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -38,10 +39,19 @@ public class InventoryPersistentRepository implements ModifyInventoryStateOutput
     }
 
     @Override
-    public InventoryId addInventory(Inventory inventory) {
-        InventoryEntity inventoryEntity = inventoryMapper.mapToJpaEntity(inventory);
+    public InventoryId addInventory(String inventoryName, int inventoryQuantity, String location) {
+        //todo 여기서도 파라미터 체크를 해야할까?
+        InventoryEntity inventoryEntity = inventoryMapper.mapToJpaEntity(
+                Inventory.withoutId(
+                        inventoryName,
+                        inventoryQuantity,
+                        location,
+                        LocalDateTime.now()));
+        //todo JpaRepository 가 파라미터 객체의 ID를 수정하는지 확인 필요,
+        // 만약 수정하지 않는다면, Entity를 만들어서 넘기지 말고, 각각 파라미터를 직접 전달하고
+        // 결과값으로 InventoryEntity를 리턴해야함
         inventoryJpaRepository.save(inventoryEntity);
-        return inventory.getInventoryId();
+        return InventoryId.of(inventoryEntity.getId());
 
     }
 }
