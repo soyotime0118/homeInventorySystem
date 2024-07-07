@@ -19,7 +19,7 @@ spring:
       ddl-auto: create-drop
     defer-datasource-initialization: true
   datasource:
-    url: jdbc:h2:~/homedb
+    url: jdbc:h2:~/homedb;mode=mysql
     username: sa
     password:
     driverClassName: org.h2.Driver
