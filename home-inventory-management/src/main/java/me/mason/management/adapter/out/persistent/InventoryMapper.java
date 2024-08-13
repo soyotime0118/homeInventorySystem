@@ -5,16 +5,18 @@ import me.mason.management.domain.Inventory;
 import me.mason.management.domain.Inventory.InventoryId;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class InventoryMapper {
 
     public Inventory mapToDomain(InventoryEntity inventoryEntity) {
         return Inventory.withId(
                 InventoryId.of(inventoryEntity.getId()),
-                inventoryEntity.getName(),
+                inventoryEntity.getItemName(),
                 inventoryEntity.getQuantity(),
                 inventoryEntity.getLocation(),
-                inventoryEntity.getLastPurchase());
+                inventoryEntity.getPurchaseDate());
     }
 
     public InventoryEntity mapToJpaEntity(Inventory inventory) {
@@ -24,6 +26,10 @@ public class InventoryMapper {
                 inventory.getName(),
                 inventory.getQuantity(),
                 inventory.getLocation(),
-                inventory.getLastPurchase());
+                "",
+                "",
+                inventory.getLastPurchase(),
+                null
+        );
     }
 }
