@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class InventoryPersistentRepository implements ModifyInventoryStateOutput {
@@ -53,5 +55,11 @@ public class InventoryPersistentRepository implements ModifyInventoryStateOutput
         inventoryJpaRepository.save(inventoryEntity);
         return InventoryId.of(inventoryEntity.getId());
 
+    }
+
+    public List<Inventory> loadByContainingInventoryName(String inventoryName) {
+        return inventoryJpaRepository.findByItemNameContaining(inventoryName).stream()
+                .map(inventoryMapper::mapToDomain)
+                .collect(Collectors.toList());
     }
 }
