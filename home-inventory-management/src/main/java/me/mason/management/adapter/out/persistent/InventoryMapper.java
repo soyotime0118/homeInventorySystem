@@ -30,7 +30,7 @@ public class InventoryMapper {
                 "",
                 "",
                 inventory.getLastPurchase(),
-                null
+                inventory.getExpiryDate()
         );
     }
 }

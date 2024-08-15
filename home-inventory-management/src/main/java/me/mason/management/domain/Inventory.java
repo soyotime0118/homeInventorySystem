@@ -19,6 +19,8 @@ public class Inventory {
 
     private LocalDateTime lastPurchase;
 
+    private LocalDateTime expiryDate;
+
 
     /**
      * {@link InventoryId } 가 존재 하는 경우 사용 하는 Builder, 주로 저장소에서 객체를 로드하는경우 호출
@@ -37,7 +39,7 @@ public class Inventory {
         if (quantity < 0) {
             throw new IllegalArgumentException("quantity must be greater than -1");
         }
-        return new Inventory(inventoryId, name, quantity, location, lastPurchase);
+        return new Inventory(inventoryId, name, quantity, location, lastPurchase, null);
     }
 
     /**
@@ -56,7 +58,7 @@ public class Inventory {
         if (quantity < 0) {
             throw new IllegalArgumentException("quantity must be greater than -1");
         }
-        return new Inventory(null, name, quantity,location, lastPurchase);
+        return new Inventory(null, name, quantity, location, lastPurchase, null);
     }
 
     /**
