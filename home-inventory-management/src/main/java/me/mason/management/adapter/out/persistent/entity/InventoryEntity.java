@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 public class InventoryEntity {
 
     @Id
+    @Column(name = "item_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -25,7 +26,10 @@ public class InventoryEntity {
 
     private int quantity;
 
+    @Transient
     private String location;
+
+    private Integer locationId;
 
     private String brand;
 

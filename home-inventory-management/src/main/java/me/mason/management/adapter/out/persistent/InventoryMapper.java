@@ -26,6 +26,7 @@ public class InventoryMapper {
                 inventory.getName(),
                 inventory.getQuantity(),
                 inventory.getLocation(),
+                0,
                 "",
                 "",
                 inventory.getLastPurchase(),
