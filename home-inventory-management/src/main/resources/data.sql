@@ -1,1 +1,1 @@
-insert into inventory(id,name,quantity) values (1,'컵라면1',10);
+insert into items(ITEM_ID,ITEM_NAME,QUANTITY) values (1,'컵라면1',10);
