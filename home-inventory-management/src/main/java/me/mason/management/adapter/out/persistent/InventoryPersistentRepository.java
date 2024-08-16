@@ -41,13 +41,13 @@ public class InventoryPersistentRepository implements ModifyInventoryStateOutput
     }
 
     @Override
-    public InventoryId addInventory(String inventoryName, int inventoryQuantity, String location) {
+    public InventoryId addInventory(String inventoryName, int inventoryQuantity, int locationId) {
         //todo 여기서도 파라미터 체크를 해야할까?
         InventoryEntity inventoryEntity = inventoryMapper.mapToJpaEntity(
                 Inventory.withoutId(
                         inventoryName,
                         inventoryQuantity,
-                        location,
+                        locationId,
                         LocalDateTime.now()));
         //todo JpaRepository 가 파라미터 객체의 ID를 수정하는지 확인 필요,
         // 만약 수정하지 않는다면, Entity를 만들어서 넘기지 말고, 각각 파라미터를 직접 전달하고

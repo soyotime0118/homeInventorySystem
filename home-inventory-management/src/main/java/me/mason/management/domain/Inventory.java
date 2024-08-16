@@ -11,11 +11,11 @@ public class Inventory {
 
     private InventoryId inventoryId;
 
-    private String name;
+    private String itemName;
 
     private int quantity;
 
-    private String location;
+    private int locationId;
 
     private LocalDateTime lastPurchase;
 
@@ -34,12 +34,12 @@ public class Inventory {
             InventoryId inventoryId,
             String name,
             int quantity,
-            String location,
+            int locationId,
             LocalDateTime lastPurchase) {
         if (quantity < 0) {
             throw new IllegalArgumentException("quantity must be greater than -1");
         }
-        return new Inventory(inventoryId, name, quantity, location, lastPurchase, null);
+        return new Inventory(inventoryId, name, quantity, locationId, lastPurchase, null);
     }
 
     /**
@@ -53,12 +53,12 @@ public class Inventory {
     public static Inventory withoutId(
             String name,
             int quantity,
-            String location,
+            int locationId,
             LocalDateTime lastPurchase) {
         if (quantity < 0) {
             throw new IllegalArgumentException("quantity must be greater than -1");
         }
-        return new Inventory(null, name, quantity, location, lastPurchase, null);
+        return new Inventory(null, name, quantity, locationId, lastPurchase, null);
     }
 
     /**
@@ -78,6 +78,10 @@ public class Inventory {
         this.lastPurchase = LocalDateTime.now();
     }
 
+    public Integer getLocationId() {
+        return null;
+    }
+
 
     @Value(staticConstructor = "of")
     public static class InventoryId {
@@ -88,7 +92,7 @@ public class Inventory {
     public String toString() {
         return "Inventory{" +
                "inventoryId=" + inventoryId +
-               ", name='" + name + '\'' +
+               ", name='" + itemName + '\'' +
                ", quantity=" + quantity +
                ", lastPurchase=" + lastPurchase +
                '}';

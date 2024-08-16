@@ -32,7 +32,7 @@ public class InventoryPurchaser implements PurchaseInventoryInput {
     public InventoryId purchaseNewInventory(PurchaseNewInventoryCommand command) {
 
         return inventoryPersistentRepository.addInventory(
-                command.getName(), command.getQuantity(), command.getLocation());
+                command.getName(), command.getQuantity(), command.getLocationId());
 
     }
 
