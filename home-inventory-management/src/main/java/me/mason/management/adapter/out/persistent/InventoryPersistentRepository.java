@@ -7,6 +7,7 @@ import me.mason.management.ports.out.ModifyInventoryStateOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +60,18 @@ public class InventoryPersistentRepository implements ModifyInventoryStateOutput
 
     public List<Inventory> loadByContainingInventoryName(String inventoryName) {
         return inventoryJpaRepository.findByItemNameContaining(inventoryName).stream()
+                .map(inventoryMapper::mapToDomain)
+                .collect(Collectors.toList());
+    }
+
+    public List<Inventory> loadByExpiryDateBefore(LocalDate expiryDate){
+        return inventoryJpaRepository.findByExpiryDateBefore(expiryDate).stream()
+                .map(inventoryMapper::mapToDomain)
+                .collect(Collectors.toList());
+    }
+
+    public List<Inventory> loadByExpiryDateBefore(int quantity){
+        return inventoryJpaRepository.findByQuantityLessThanEqual(quantity).stream()
                 .map(inventoryMapper::mapToDomain)
                 .collect(Collectors.toList());
     }
