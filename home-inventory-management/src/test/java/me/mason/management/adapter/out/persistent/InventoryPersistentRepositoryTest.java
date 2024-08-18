@@ -46,7 +46,7 @@ class InventoryPersistentRepositoryTest {
     void addInventory() {
         when(inventoryJpaRepository.save(any(InventoryEntity.class))).thenReturn(mockInventoryEntity);
 
-        InventoryId inventoryId = inventoryPersistentRepository.addInventory("name", 1, "basement");
+        InventoryId inventoryId = inventoryPersistentRepository.addInventory("name", 1, 1);
 
 
         Assertions.assertThat(inventoryId).isNotNull();

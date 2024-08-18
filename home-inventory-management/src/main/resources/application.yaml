@@ -36,10 +36,10 @@ spring:
     activate:
       on-profile: develop
   datasource:
-    url: jdbc:mysql://localhost:3306/homedb
+    url: jdbc:postgresql://localhost:5432/homedb
     username: sa
     password: mycat123
-    driverClassName: com.mysql.cj.jdbc.Driver
+    driverClassName: org.postgresql.Driver
   jpa:
     show-sql: true
     hibernate:

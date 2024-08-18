@@ -14,18 +14,25 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "inventory")
+@Table(name = "items")
 public class InventoryEntity {
 
     @Id
+    @Column(name = "item_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String itemName;
 
     private int quantity;
 
-    private String location;
+    private Integer locationId;
 
-    private LocalDateTime lastPurchase;
+    private String brand;
+
+    private String purchaseLocation;
+
+    private LocalDateTime purchaseDate;
+
+    private LocalDateTime expiryDate;
 }

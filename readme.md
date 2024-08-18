@@ -111,6 +111,7 @@ erDiagram
         varchar family_member_name
         varchar role
     }
+    USERS ||--o{ FAMILY_MEMBERS : "has"
 
     CATEGORIES {
         int category_id PK
@@ -133,6 +134,8 @@ erDiagram
         int quantity
         int location_id
     }
+    CATEGORIES ||--o{ ITEMS : "categorized"
+    STORAGE_LOCATIONS ||--o{ ITEMS : "stored at"
 
     STOCK_ALERTS {
         int alert_id PK
@@ -140,6 +143,7 @@ erDiagram
         int alert_threshold
         boolean alert_active
     }
+    ITEMS ||--o{ STOCK_ALERTS : "triggers"
 
     USAGE_LOGS {
         int usage_log_id PK
@@ -147,12 +151,14 @@ erDiagram
         int used_quantity
         timestamp usage_date
     }
+    ITEMS ||--o{ USAGE_LOGS : "recorded by"
 
     PURCHASE_LISTS {
         int purchase_list_id PK
         int user_id
         timestamp created_at
     }
+    USERS ||--o{ PURCHASE_LISTS : "owns"
 
     PURCHASE_LIST_ITEMS {
         int purchase_list_item_id PK
@@ -161,6 +167,8 @@ erDiagram
         int quantity
         boolean purchased
     }
+    PURCHASE_LISTS ||--o{ PURCHASE_LIST_ITEMS : "contains"
+    ITEMS ||--o{ PURCHASE_LIST_ITEMS : "requested"
 
     PURCHASE_LOGS {
         int purchase_log_id PK
@@ -169,6 +177,7 @@ erDiagram
         timestamp purchase_date
         numeric cost
     }
+    ITEMS ||--o{ PURCHASE_LOGS : "recorded in"
 
     SETTINGS {
         int setting_id PK
@@ -176,6 +185,7 @@ erDiagram
         varchar theme
         varchar language
     }
+    USERS ||--o{ SETTINGS : "configured by"
 
     TRANSLATIONS {
         int translation_id PK
@@ -183,18 +193,4 @@ erDiagram
         varchar language
         text value
     }
-
-    USERS ||--o{ FAMILY_MEMBERS : "has"
-    USERS ||--o{ PURCHASE_LISTS : "creates"
-    USERS ||--o{ SETTINGS : "has"
-
-    CATEGORIES ||--o{ ITEMS : "classified by"
-    STORAGE_LOCATIONS ||--o{ ITEMS : "stored in"
-
-    ITEMS ||--o{ STOCK_ALERTS : "has"
-    ITEMS ||--o{ USAGE_LOGS : "tracked by"
-    ITEMS ||--o{ PURCHASE_LIST_ITEMS : "contains"
-    ITEMS ||--o{ PURCHASE_LOGS : "purchased in"
-
-    PURCHASE_LISTS ||--o{ PURCHASE_LIST_ITEMS : "contains"
 ```

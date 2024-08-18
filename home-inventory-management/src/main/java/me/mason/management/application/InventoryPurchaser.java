@@ -8,8 +8,6 @@ import me.mason.management.ports.out.ModifyInventoryStateOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 public class InventoryPurchaser implements PurchaseInventoryInput {
 
@@ -34,7 +32,8 @@ public class InventoryPurchaser implements PurchaseInventoryInput {
     public InventoryId purchaseNewInventory(PurchaseNewInventoryCommand command) {
 
         return inventoryPersistentRepository.addInventory(
-                command.getName(), command.getQuantity(), command.getLocation());
+                command.getName(), command.getQuantity(), command.getLocationId());
 
     }
+
 }

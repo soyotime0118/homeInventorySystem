@@ -12,18 +12,19 @@ public class PurchaseNewInventoryCommand {
     private String name;
     @Schema(description = "상품수량", example = "1")
     private int quantity;
-    @Schema(description = "상품장소", example = "창고")
-    private String location;
+    @Schema(description = "상품장소Id", example = "창고")
+    private int locationId;
 
     public PurchaseNewInventoryCommand(
             String name,
             int quantity,
-            String location) {
+            int locationId) {
         if (quantity <= 0) {
             throw new IllegalArgumentException("quantity must be greater than 0");
         }
         this.name = name;
         this.quantity = quantity;
-        this.location = location;
+        this.locationId = locationId;
     }
+
 }

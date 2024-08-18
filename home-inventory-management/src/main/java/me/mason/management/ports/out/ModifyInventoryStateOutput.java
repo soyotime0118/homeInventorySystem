@@ -25,5 +25,5 @@ public interface ModifyInventoryStateOutput {
      * @param location
      * @return 추가한 재고ID
      */
-    InventoryId addInventory(String inventoryName, int inventoryQuantity, String location);
+    InventoryId addInventory(String inventoryName, int inventoryQuantity, int locationId);
 }

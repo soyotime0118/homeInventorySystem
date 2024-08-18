@@ -2,14 +2,15 @@ package me.mason.management.adapter.in.web;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.Schema;
+import me.mason.management.adapter.out.persistent.InventoryPersistentRepository;
+import me.mason.management.domain.Inventory;
 import me.mason.management.domain.Inventory.InventoryId;
 import me.mason.management.ports.in.PurchaseInventoryInput;
 import me.mason.management.ports.in.UseInventoryInput;
-import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RequestMapping("inventory")
@@ -20,10 +21,16 @@ public class InventoryRestController {
 
     private final PurchaseInventoryInput purchaseInventoryInput;
 
+    private final InventoryPersistentRepository inventoryPersistentRepository;
+
     @Autowired
-    public InventoryRestController(UseInventoryInput useInventoryInput, PurchaseInventoryInput purchaseInventoryInput) {
+    public InventoryRestController(
+            UseInventoryInput useInventoryInput,
+            PurchaseInventoryInput purchaseInventoryInput,
+            InventoryPersistentRepository inventoryPersistentRepository) {
         this.useInventoryInput = useInventoryInput;
         this.purchaseInventoryInput = purchaseInventoryInput;
+        this.inventoryPersistentRepository = inventoryPersistentRepository;
     }
 
 
@@ -47,5 +54,11 @@ public class InventoryRestController {
     @PostMapping("purchase/")
     public void purchaseInventory(@RequestBody PurchaseNewInventoryCommand command) {
         purchaseInventoryInput.purchaseNewInventory(command);
+    }
+
+    @Operation(summary = "상품 이름검색")
+    @GetMapping("/search/like")
+    public List<Inventory> loadByContainingInventoryName(@RequestParam String keyword) {
+        return inventoryPersistentRepository.loadByContainingInventoryName(keyword);
     }
 }

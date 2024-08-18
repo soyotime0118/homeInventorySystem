@@ -11,19 +11,23 @@ public class InventoryMapper {
     public Inventory mapToDomain(InventoryEntity inventoryEntity) {
         return Inventory.withId(
                 InventoryId.of(inventoryEntity.getId()),
-                inventoryEntity.getName(),
+                inventoryEntity.getItemName(),
                 inventoryEntity.getQuantity(),
-                inventoryEntity.getLocation(),
-                inventoryEntity.getLastPurchase());
+                inventoryEntity.getLocationId(),
+                inventoryEntity.getPurchaseDate());
     }
 
     public InventoryEntity mapToJpaEntity(Inventory inventory) {
         return new InventoryEntity(
                 //todo 새로 추가하는 경우 inventoryId가 null 인데 이렇게 처리하는게 맞는지 확인필요
                 inventory.getInventoryId() == null ? null : inventory.getInventoryId().getValue(),
-                inventory.getName(),
+                inventory.getItemName(),
                 inventory.getQuantity(),
-                inventory.getLocation(),
-                inventory.getLastPurchase());
+                inventory.getLocationId(),
+                "",
+                "",
+                inventory.getLastPurchase(),
+                inventory.getExpiryDate()
+        );
     }
 }
