@@ -1,1 +1,0 @@
-insert into items(ITEM_ID,ITEM_NAME,QUANTITY) values (1,'컵라면1',10);

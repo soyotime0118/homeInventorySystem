@@ -15,6 +15,10 @@ public class PurchaseNewInventoryCommand {
     @Schema(description = "상품장소Id", example = "창고")
     private int locationId;
 
+    private String purchaseLocation;
+
+    private String brandName;
+
     public PurchaseNewInventoryCommand(
             String name,
             int quantity,

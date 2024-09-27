@@ -40,7 +40,7 @@ class InventoryPurchaserUnitTest {
     @Test
     void purchaseExistInventory() {
         Map<InventoryId, Inventory> inventoryMap = new HashMap<>();
-        inventoryMap.put(InventoryId.of(1L), Inventory.withId(InventoryId.of(1L), "test", 1, 1, LocalDateTime.now()));
+        inventoryMap.put(InventoryId.of(1L), Inventory.withId(InventoryId.of(1L), "test", 1, 1, "", "", LocalDateTime.now()));
         FakeInventoryRepository fakeInventoryRepository = new FakeInventoryRepository(inventoryMap);
         purchaseInventoryInput = new InventoryPurchaser(fakeInventoryRepository);
 
@@ -59,7 +59,7 @@ class InventoryPurchaserUnitTest {
     @Test
     void purchaseInventoryQuantityZero_throwException() {
         Map<InventoryId, Inventory> inventoryMap = new HashMap<>();
-        inventoryMap.put(InventoryId.of(1L), Inventory.withId(InventoryId.of(1L), "test", 1, 1, LocalDateTime.now()));
+        inventoryMap.put(InventoryId.of(1L), Inventory.withId(InventoryId.of(1L), "test", 1, 1, "", "", LocalDateTime.now()));
         FakeInventoryRepository fakeInventoryRepository = new FakeInventoryRepository(inventoryMap);
         purchaseInventoryInput = new InventoryPurchaser(fakeInventoryRepository);
 

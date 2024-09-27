@@ -11,6 +11,7 @@ public interface ModifyInventoryStateOutput {
 
     /**
      * 재고 저장
+     *
      * @param inventory 변경할 재고
      */
     void modifyInventory(Inventory inventory);
@@ -20,10 +21,17 @@ public interface ModifyInventoryStateOutput {
     /**
      * 새로운 재고추가
      *
+     * @param location
      * @param inventoryName
      * @param inventoryQuantity
-     * @param location
+     * @param brandName
+     * @param purchaseLocation
      * @return 추가한 재고ID
      */
-    InventoryId addInventory(String inventoryName, int inventoryQuantity, int locationId);
+    InventoryId addInventory(
+            String inventoryName,
+            int inventoryQuantity,
+            int locationId,
+            String brandName,
+            String purchaseLocation);
 }

@@ -44,20 +44,36 @@ public class InventoryPersistentAdapter implements ModifyInventoryStateOutput {
     }
 
     @Override
-    public InventoryId addInventory(String inventoryName, int inventoryQuantity, int locationId) {
-        //todo 여기서도 파라미터 체크를 해야할까?
-        InventoryEntity inventoryEntity = inventoryMapper.mapToJpaEntity(
-                Inventory.withoutId(
-                        inventoryName,
-                        inventoryQuantity,
-                        locationId,
-                        LocalDateTime.now()));
-        //todo JpaRepository 가 파라미터 객체의 ID를 수정하는지 확인 필요,
-        // 만약 수정하지 않는다면, Entity를 만들어서 넘기지 말고, 각각 파라미터를 직접 전달하고
-        // 결과값으로 InventoryEntity를 리턴해야함
-        inventoryJpaRepository.save(inventoryEntity);
-        return InventoryId.of(inventoryEntity.getId());
+    public InventoryId addInventory(
+            String name,
+            int quantity,
+            int locationId,
+            String brandName,
+            String purchaseLocation) {
+        Inventory inventory = createInventoryWithoutId(
+                name,
+                quantity,
+                locationId,
+                brandName,
+                purchaseLocation,
+                LocalDateTime.now());
+        InventoryEntity entity = mapToJpaEntity(inventory);
+        inventoryJpaRepository.save(entity);
+        return InventoryId.of(entity.getId());
+    }
 
+    private Inventory createInventoryWithoutId(
+            String name,
+            int quantity,
+            int locationId,
+            String brandName,
+            String purchaseLocation,
+            LocalDateTime purchaseTime) {
+        return Inventory.withoutId(name, quantity, locationId, brandName, purchaseLocation, purchaseTime);
+    }
+
+    private InventoryEntity mapToJpaEntity(Inventory inventory) {
+        return inventoryMapper.mapToJpaEntity(inventory);
     }
 
     public List<Inventory> loadByContainingInventoryName(String inventoryName) {

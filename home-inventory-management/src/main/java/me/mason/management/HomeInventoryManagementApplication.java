@@ -4,7 +4,7 @@ import me.mason.config.EnableStubAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@EnableStubAutoConfiguration
+//@EnableStubAutoConfiguration
 @SpringBootApplication
 public class HomeInventoryManagementApplication {
 

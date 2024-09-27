@@ -24,8 +24,8 @@ class UseInventoryUnitTest {
     @BeforeEach
     void setUp() {
         Map<InventoryId, Inventory> idInventoryMap = new HashMap<>();
-        idInventoryMap.put(InventoryId.of(1L), Inventory.withId(InventoryId.of(1L), "1번상품", 100, 1, LocalDateTime.now()));
-        idInventoryMap.put(InventoryId.of(2L), Inventory.withId(InventoryId.of(2L), "2번상품", 100, 1, LocalDateTime.now()));
+        idInventoryMap.put(InventoryId.of(1L), Inventory.withId(InventoryId.of(1L), "1번상품", 100, 1, "", "", LocalDateTime.now()));
+        idInventoryMap.put(InventoryId.of(2L), Inventory.withId(InventoryId.of(2L), "2번상품", 100, 1, "", "", LocalDateTime.now()));
         modifyInventoryStateOutput = new FakeInventoryRepository(idInventoryMap);
         useInventory = new UseInventory(modifyInventoryStateOutput);
     }
