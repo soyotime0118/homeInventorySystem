@@ -1,9 +1,9 @@
 package me.mason.management.application;
 
-import me.mason.management.domain.Inventory;
-import me.mason.management.domain.Inventory.InventoryId;
-import me.mason.management.ports.in.UseInventoryInput;
-import me.mason.management.ports.out.ModifyInventoryStateOutput;
+import me.mason.management.domain.model.Inventory;
+import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.application.ports.in.UseInventoryInput;
+import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
-package me.mason.management.ports.out;
+package me.mason.management.application.ports.out;
 
-import me.mason.management.domain.Inventory;
-import me.mason.management.domain.Inventory.InventoryId;
+import me.mason.management.domain.model.Inventory;
+import me.mason.management.domain.model.Inventory.InventoryId;
 
 import java.util.Optional;
 

@@ -1,10 +1,10 @@
-package me.mason.management.application;
+package me.mason.management.domain.service;
 
-import me.mason.management.adapter.in.web.PurchaseNewInventoryCommand;
-import me.mason.management.domain.Inventory;
-import me.mason.management.domain.Inventory.InventoryId;
-import me.mason.management.ports.in.PurchaseInventoryInput;
-import me.mason.management.ports.out.ModifyInventoryStateOutput;
+import me.mason.management.infrastructure.adapter.in.web.command.PurchaseNewInventoryCommand;
+import me.mason.management.domain.model.Inventory;
+import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.application.ports.in.PurchaseInventoryInput;
+import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

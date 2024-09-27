@@ -1,7 +1,7 @@
-package me.mason.management.ports.in;
+package me.mason.management.application.ports.in;
 
-import me.mason.management.adapter.in.web.PurchaseNewInventoryCommand;
-import me.mason.management.domain.Inventory.InventoryId;
+import me.mason.management.infrastructure.adapter.in.web.command.PurchaseNewInventoryCommand;
+import me.mason.management.domain.model.Inventory.InventoryId;
 
 public interface PurchaseInventoryInput {
 

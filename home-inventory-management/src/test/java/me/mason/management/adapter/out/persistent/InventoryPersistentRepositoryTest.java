@@ -1,7 +1,10 @@
 package me.mason.management.adapter.out.persistent;
 
-import me.mason.management.adapter.out.persistent.entity.InventoryEntity;
-import me.mason.management.domain.Inventory.InventoryId;
+import me.mason.management.infrastructure.adapter.out.persistent.InventoryPersistentAdapter;
+import me.mason.management.infrastructure.adapter.out.persistent.entity.InventoryEntity;
+import me.mason.management.infrastructure.adapter.out.persistent.mapper.InventoryMapper;
+import me.mason.management.infrastructure.adapter.out.persistent.repository.InventoryJpaRepository;
+import me.mason.management.domain.model.Inventory.InventoryId;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +21,7 @@ import static org.mockito.Mockito.when;
 class InventoryPersistentRepositoryTest {
 
     @InjectMocks
-    InventoryPersistentRepository inventoryPersistentRepository;
+    InventoryPersistentAdapter inventoryPersistentAdapter;
 
     /**
      * Mock 객체 사용
@@ -46,7 +49,7 @@ class InventoryPersistentRepositoryTest {
     void addInventory() {
         when(inventoryJpaRepository.save(any(InventoryEntity.class))).thenReturn(mockInventoryEntity);
 
-        InventoryId inventoryId = inventoryPersistentRepository.addInventory("name", 1, 1);
+        InventoryId inventoryId = inventoryPersistentAdapter.addInventory("name", 1, 1);
 
 
         Assertions.assertThat(inventoryId).isNotNull();

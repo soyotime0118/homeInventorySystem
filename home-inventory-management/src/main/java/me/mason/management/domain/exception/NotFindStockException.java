@@ -1,6 +1,6 @@
-package me.mason.management.ports.in;
+package me.mason.management.domain.exception;
 
-import me.mason.management.domain.Inventory.InventoryId;
+import me.mason.management.domain.model.Inventory.InventoryId;
 
 public class NotFindStockException extends RuntimeException {
 

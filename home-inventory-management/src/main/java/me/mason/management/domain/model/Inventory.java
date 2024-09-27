@@ -1,6 +1,7 @@
-package me.mason.management.domain;
+package me.mason.management.domain.model;
 
 import lombok.*;
+import me.mason.management.domain.exception.NotEnoughStockException;
 
 import java.time.LocalDateTime;
 

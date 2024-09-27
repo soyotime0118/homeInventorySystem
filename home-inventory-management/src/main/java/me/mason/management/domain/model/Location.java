@@ -1,4 +1,4 @@
-package me.mason.management.domain;
+package me.mason.management.domain.model;
 
 import lombok.*;
 

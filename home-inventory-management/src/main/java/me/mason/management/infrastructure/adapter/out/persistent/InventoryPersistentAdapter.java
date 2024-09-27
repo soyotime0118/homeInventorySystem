@@ -1,9 +1,11 @@
-package me.mason.management.adapter.out.persistent;
+package me.mason.management.infrastructure.adapter.out.persistent;
 
-import me.mason.management.adapter.out.persistent.entity.InventoryEntity;
-import me.mason.management.domain.Inventory;
-import me.mason.management.domain.Inventory.InventoryId;
-import me.mason.management.ports.out.ModifyInventoryStateOutput;
+import me.mason.management.infrastructure.adapter.out.persistent.mapper.InventoryMapper;
+import me.mason.management.infrastructure.adapter.out.persistent.entity.InventoryEntity;
+import me.mason.management.infrastructure.adapter.out.persistent.repository.InventoryJpaRepository;
+import me.mason.management.domain.model.Inventory;
+import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +16,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class InventoryPersistentRepository implements ModifyInventoryStateOutput {
+public class InventoryPersistentAdapter implements ModifyInventoryStateOutput {
 
     private final InventoryJpaRepository inventoryJpaRepository;
     private final InventoryMapper inventoryMapper;
 
     @Autowired
-    public InventoryPersistentRepository(
+    public InventoryPersistentAdapter(
             InventoryJpaRepository inventoryJpaRepository,
             InventoryMapper inventoryMapper) {
         this.inventoryJpaRepository = inventoryJpaRepository;
@@ -64,13 +66,13 @@ public class InventoryPersistentRepository implements ModifyInventoryStateOutput
                 .collect(Collectors.toList());
     }
 
-    public List<Inventory> loadByExpiryDateBefore(LocalDate expiryDate){
+    public List<Inventory> loadByExpiryDateBefore(LocalDate expiryDate) {
         return inventoryJpaRepository.findByExpiryDateBefore(expiryDate).stream()
                 .map(inventoryMapper::mapToDomain)
                 .collect(Collectors.toList());
     }
 
-    public List<Inventory> loadByExpiryDateBefore(int quantity){
+    public List<Inventory> loadByExpiryDateBefore(int quantity) {
         return inventoryJpaRepository.findByQuantityLessThanEqual(quantity).stream()
                 .map(inventoryMapper::mapToDomain)
                 .collect(Collectors.toList());

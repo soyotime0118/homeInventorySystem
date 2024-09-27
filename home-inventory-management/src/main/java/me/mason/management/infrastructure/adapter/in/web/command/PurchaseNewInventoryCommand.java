@@ -1,4 +1,4 @@
-package me.mason.management.adapter.in.web;
+package me.mason.management.infrastructure.adapter.in.web.command;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

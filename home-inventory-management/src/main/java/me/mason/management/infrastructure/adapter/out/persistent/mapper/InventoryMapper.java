@@ -1,8 +1,8 @@
-package me.mason.management.adapter.out.persistent;
+package me.mason.management.infrastructure.adapter.out.persistent.mapper;
 
-import me.mason.management.adapter.out.persistent.entity.InventoryEntity;
-import me.mason.management.domain.Inventory;
-import me.mason.management.domain.Inventory.InventoryId;
+import me.mason.management.infrastructure.adapter.out.persistent.entity.InventoryEntity;
+import me.mason.management.domain.model.Inventory;
+import me.mason.management.domain.model.Inventory.InventoryId;
 import org.springframework.stereotype.Component;
 
 @Component

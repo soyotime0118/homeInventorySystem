@@ -1,10 +1,11 @@
 package me.mason.management.application;
 
 import me.mason.fake.FakeInventoryRepository;
-import me.mason.management.adapter.in.web.PurchaseNewInventoryCommand;
-import me.mason.management.domain.Inventory;
-import me.mason.management.domain.Inventory.InventoryId;
-import me.mason.management.ports.in.PurchaseInventoryInput;
+import me.mason.management.infrastructure.adapter.in.web.command.PurchaseNewInventoryCommand;
+import me.mason.management.domain.model.Inventory;
+import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.application.ports.in.PurchaseInventoryInput;
+import me.mason.management.domain.service.InventoryPurchaser;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

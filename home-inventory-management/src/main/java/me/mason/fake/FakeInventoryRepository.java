@@ -1,8 +1,8 @@
 package me.mason.fake;
 
-import me.mason.management.domain.Inventory;
-import me.mason.management.domain.Inventory.InventoryId;
-import me.mason.management.ports.out.ModifyInventoryStateOutput;
+import me.mason.management.domain.model.Inventory;
+import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -34,7 +34,12 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
 
     @Override
     public InventoryId addInventory(String inventoryName, int inventoryQuantity, int locationId) {
-        InventoryId nextId = InventoryId.of(idInventoryMap.keySet().stream().max(Comparator.comparing(InventoryId::getValue)).orElse(InventoryId.of(1L)).getValue());
+        long nextValue = idInventoryMap.keySet()
+                                 .stream()
+                                 .max(Comparator.comparing(InventoryId::getValue))
+                                 .map(InventoryId::getValue)
+                                 .orElse(0L) + 1;
+        InventoryId nextId = InventoryId.of(nextValue);
         Inventory newInventory = Inventory.withId(
                 nextId,
                 inventoryName,

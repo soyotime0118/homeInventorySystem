@@ -1,4 +1,4 @@
-package me.mason.management.adapter.out.persistent.entity;
+package me.mason.management.infrastructure.adapter.out.persistent.entity;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,12 +1,13 @@
-package me.mason.management.adapter.in.web;
+package me.mason.management.infrastructure.adapter.in.web.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import me.mason.management.adapter.out.persistent.InventoryPersistentRepository;
-import me.mason.management.domain.Inventory;
-import me.mason.management.domain.Inventory.InventoryId;
-import me.mason.management.ports.in.PurchaseInventoryInput;
-import me.mason.management.ports.in.UseInventoryInput;
+import me.mason.management.infrastructure.adapter.in.web.command.PurchaseNewInventoryCommand;
+import me.mason.management.infrastructure.adapter.out.persistent.InventoryPersistentAdapter;
+import me.mason.management.domain.model.Inventory;
+import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.application.ports.in.PurchaseInventoryInput;
+import me.mason.management.application.ports.in.UseInventoryInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,16 +22,16 @@ public class InventoryRestController {
 
     private final PurchaseInventoryInput purchaseInventoryInput;
 
-    private final InventoryPersistentRepository inventoryPersistentRepository;
+    private final InventoryPersistentAdapter inventoryPersistentAdapter;
 
     @Autowired
     public InventoryRestController(
             UseInventoryInput useInventoryInput,
             PurchaseInventoryInput purchaseInventoryInput,
-            InventoryPersistentRepository inventoryPersistentRepository) {
+            InventoryPersistentAdapter inventoryPersistentAdapter) {
         this.useInventoryInput = useInventoryInput;
         this.purchaseInventoryInput = purchaseInventoryInput;
-        this.inventoryPersistentRepository = inventoryPersistentRepository;
+        this.inventoryPersistentAdapter = inventoryPersistentAdapter;
     }
 
 
@@ -59,6 +60,6 @@ public class InventoryRestController {
     @Operation(summary = "상품 이름검색")
     @GetMapping("/search/like")
     public List<Inventory> loadByContainingInventoryName(@RequestParam String keyword) {
-        return inventoryPersistentRepository.loadByContainingInventoryName(keyword);
+        return inventoryPersistentAdapter.loadByContainingInventoryName(keyword);
     }
 }
