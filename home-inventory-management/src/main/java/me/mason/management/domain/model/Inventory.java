@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Inventory {
 
     private InventoryId inventoryId;
@@ -18,10 +17,34 @@ public class Inventory {
 
     private int locationId;
 
+    private String brand;
+
+    private String purchaseLocation;
+
     private LocalDateTime lastPurchase;
 
     private LocalDateTime expiryDate;
 
+    @Builder(toBuilder = true)
+    private Inventory(
+            InventoryId inventoryId,
+            String itemName,
+            int quantity,
+            int locationId,
+            String brand,
+            String purchaseLocation,
+            LocalDateTime lastPurchase,
+            LocalDateTime expiryDate
+    ) {
+        this.inventoryId = inventoryId;
+        this.itemName = itemName;
+        this.quantity = quantity;
+        this.locationId = locationId;
+        this.brand = brand;
+        this.purchaseLocation = purchaseLocation;
+        this.lastPurchase = lastPurchase;
+        this.expiryDate = expiryDate;
+    }
 
     /**
      * {@link InventoryId } 가 존재 하는 경우 사용 하는 Builder, 주로 저장소에서 객체를 로드하는경우 호출
@@ -30,17 +53,31 @@ public class Inventory {
      * @param name        인벤토리 이름
      * @param quantity    수량
      */
-    @Builder(builderMethodName = "withId")
     public static Inventory withId(
             InventoryId inventoryId,
             String name,
             int quantity,
             int locationId,
-            LocalDateTime lastPurchase) {
+            String brandName,
+            String purchaseLocation,
+            LocalDateTime lastPurchase
+    ) {
+        validateQuantity(quantity);
+        return Inventory.builder()
+                .inventoryId(inventoryId)
+                .itemName(name)
+                .quantity(quantity)
+                .locationId(locationId)
+                .brand(brandName)
+                .purchaseLocation(purchaseLocation)
+                .lastPurchase(lastPurchase)
+                .build();
+    }
+
+    private static void validateQuantity(int quantity) {
         if (quantity < 0) {
             throw new IllegalArgumentException("quantity must be greater than -1");
         }
-        return new Inventory(inventoryId, name, quantity, locationId, lastPurchase, null);
     }
 
     /**
@@ -50,16 +87,23 @@ public class Inventory {
      * @param quantity 수량
      * @throws IllegalArgumentException quantity가 음수인경우 발생
      */
-    @Builder(builderMethodName = "withoutId")
     public static Inventory withoutId(
             String name,
             int quantity,
             int locationId,
-            LocalDateTime lastPurchase) {
-        if (quantity < 0) {
-            throw new IllegalArgumentException("quantity must be greater than -1");
-        }
-        return new Inventory(null, name, quantity, locationId, lastPurchase, null);
+            String brandName,
+            String purchaseLocation,
+            LocalDateTime lastPurchase
+    ) {
+        validateQuantity(quantity);
+        return Inventory.builder()
+                .itemName(name)
+                .quantity(quantity)
+                .locationId(locationId)
+                .brand(brandName)
+                .purchaseLocation(purchaseLocation)
+                .lastPurchase(lastPurchase)
+                .build();
     }
 
     /**
@@ -80,7 +124,7 @@ public class Inventory {
     }
 
     public Integer getLocationId() {
-        return null;
+        return locationId;
     }
 
 
