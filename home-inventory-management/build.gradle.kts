@@ -6,7 +6,7 @@ plugins {
 
 group = "me.mason"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 configurations {
     compileOnly {
@@ -20,16 +20,21 @@ repositories {
     maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
+val MYSQL_CONNECTOR_VERSION = "8.0.33"
+val H2_VERSION = "2.1.212"
+val SPRINGDOC_OPENAPI_UI_VERSION = "1.8.0"
+
+
 dependencies {
-    implementation("mysql:mysql-connector-java:8.0.33")
-    implementation("com.h2database:h2:2.1.212")
+    implementation("mysql:mysql-connector-java:$MYSQL_CONNECTOR_VERSION")
+    implementation("com.h2database:h2:$H2_VERSION")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
+    implementation("org.springdoc:springdoc-openapi-ui:$SPRINGDOC_OPENAPI_UI_VERSION")
     implementation("org.postgresql:postgresql")
-    compileOnly("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok:latest.release")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    annotationProcessor("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok:latest.release")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
