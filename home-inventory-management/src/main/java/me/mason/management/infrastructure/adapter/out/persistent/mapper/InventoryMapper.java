@@ -1,30 +1,39 @@
 package me.mason.management.infrastructure.adapter.out.persistent.mapper;
 
-import me.mason.management.infrastructure.adapter.out.persistent.entity.InventoryEntity;
+import me.mason.management.domain.model.InventoryFactory;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.infrastructure.adapter.out.persistent.entity.InventoryEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class InventoryMapper {
 
     public Inventory mapToDomain(InventoryEntity inventoryEntity) {
-        return Inventory.withId(
-                InventoryId.of(inventoryEntity.getId()),
-                inventoryEntity.getItemName(),
-                inventoryEntity.getQuantity(),
-                inventoryEntity.getLocationId(),
-                inventoryEntity.getBrand(),
-                inventoryEntity.getPurchaseLocation(),
-                inventoryEntity.getPurchaseDate());
+        return InventoryFactory
+                .withId(
+                        InventoryId.of(inventoryEntity.getId()),
+                        inventoryEntity.getItemName(),
+                        inventoryEntity.getQuantity(),
+                        inventoryEntity.getLocationId(),
+                        inventoryEntity.getBrand(),
+                        inventoryEntity.getPurchaseLocation(),
+                        inventoryEntity.getPurchaseDate(),
+                        inventoryEntity.getExpiryDate()
+                );
     }
 
     public InventoryEntity mapToJpaEntity(Inventory inventory) {
+        if (inventory == null) {
+            throw new IllegalArgumentException("Inventory is null");
+        }
+        Long id = Optional.ofNullable(inventory.getInventoryId()).map(InventoryId::getValue).orElse(null);
         return new InventoryEntity(
-                //todo 새로 추가하는 경우 inventoryId가 null 인데 이렇게 처리하는게 맞는지 확인필요
-                inventory.getInventoryId() == null ? null : inventory.getInventoryId().getValue(),
+                id,
                 inventory.getItemName(),
-                inventory.getQuantity(),
+                inventory.getQuantity().asLong(),
                 inventory.getLocationId(),
                 inventory.getBrand(),
                 inventory.getPurchaseLocation(),

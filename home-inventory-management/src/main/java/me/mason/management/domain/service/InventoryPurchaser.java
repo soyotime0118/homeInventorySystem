@@ -31,13 +31,13 @@ public class InventoryPurchaser implements PurchaseInventoryInput {
     @Override
     public InventoryId purchaseNewInventory(PurchaseNewInventoryCommand command) {
 
-        return inventoryPersistentRepository.addInventory(
-                command.getName(),
-                command.getQuantity(),
-                command.getLocationId(),
-                command.getBrandName(),
-                command.getPurchaseLocation());
-
+//        return inventoryPersistentRepository.addInventory(
+//                command.getName(),
+//                command.getQuantity(),
+//                command.getLocationId(),
+//                command.getBrandName(),
+//                command.getPurchaseLocation()).getInventoryId();
+        return null;
     }
 
 }

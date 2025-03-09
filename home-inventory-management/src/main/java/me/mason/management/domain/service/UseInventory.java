@@ -29,7 +29,7 @@ public class UseInventory implements UseInventoryInput {
      */
     @Override
     @Transactional
-    public int usingInventory(InventoryId inventoryId, int quantity) {
+    public long usingInventory(InventoryId inventoryId, int quantity) {
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be greater than 0");
         }
@@ -42,6 +42,6 @@ public class UseInventory implements UseInventoryInput {
 
         inventoryPersistentRepository.modifyInventory(inventory);
 
-        return inventory.getQuantity();
+        return inventory.getQuantity().value();
     }
 }
