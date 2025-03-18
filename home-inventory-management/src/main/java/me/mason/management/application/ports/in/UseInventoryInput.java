@@ -13,7 +13,7 @@ public interface UseInventoryInput {
      * @return 사용후 잔여수량
      * @throws IllegalArgumentException 수량이 0이하일 경우
      */
-    int usingInventory(InventoryId inventoryId, int quantity);
+    long usingInventory(InventoryId inventoryId, int quantity);
 
 
 }

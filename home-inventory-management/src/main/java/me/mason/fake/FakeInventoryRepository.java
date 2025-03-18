@@ -33,23 +33,21 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
     }
 
     @Override
-    public InventoryId addInventory(String inventoryName, int inventoryQuantity, int locationId, String brandName, String purchaseLocation) {
+    public Inventory addInventory(Inventory createdInventory) {
         long nextValue = idInventoryMap.keySet()
                                  .stream()
                                  .max(Comparator.comparing(InventoryId::getValue))
                                  .map(InventoryId::getValue)
                                  .orElse(0L) + 1;
         InventoryId nextId = InventoryId.of(nextValue);
-        Inventory newInventory = Inventory.withId(
-                nextId,
-                inventoryName,
-                inventoryQuantity,
-                locationId,
-                brandName,
-                purchaseLocation,
-                LocalDateTime.now());
+        Inventory newInventory = createdInventory.toBuilder().inventoryId(nextId).build();
         idInventoryMap.put(nextId, newInventory);
-        return nextId;
+        return newInventory;
+    }
+
+    @Override
+    public Inventory updateInventory(Inventory inventory) {
+        return null;
     }
 
 }

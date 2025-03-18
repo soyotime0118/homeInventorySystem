@@ -24,9 +24,9 @@ public class InventoryEntity {
 
     private String itemName;
 
-    private int quantity;
+    private long quantity;
 
-    private Integer locationId;
+    private Long locationId;
 
     private String brand;
 

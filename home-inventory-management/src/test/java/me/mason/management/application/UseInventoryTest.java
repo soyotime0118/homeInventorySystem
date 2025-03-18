@@ -63,7 +63,7 @@ class UseInventoryTest {
                 .orElseThrow();
 
         //100 - (1*100) = 0
-        Assertions.assertEquals(inventory.getQuantity(), 0);
+        Assertions.assertEquals(inventory.getQuantity(), 0L);
 
     }
 

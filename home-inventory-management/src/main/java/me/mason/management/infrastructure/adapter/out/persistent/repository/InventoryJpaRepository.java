@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface InventoryJpaRepository extends JpaRepository<InventoryEntity, Long> {
@@ -17,4 +18,12 @@ public interface InventoryJpaRepository extends JpaRepository<InventoryEntity, L
 
     // 재고가 특정 수치 이하인 아이템을 가져오기
     List<InventoryEntity> findByQuantityLessThanEqual(int quantity);
+
+    Optional<InventoryEntity> findById(Long id);
+
+//    List<InventoryEntity> findByCategory(Category category);
+//
+//    List<InventoryEntity> findByStorageLocation(StorageLocation location);
+
+//    void delete(Long id);
 }
