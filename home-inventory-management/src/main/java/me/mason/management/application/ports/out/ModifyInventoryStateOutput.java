@@ -21,15 +21,17 @@ public interface ModifyInventoryStateOutput {
     /**
      * 새로운 재고추가
      *
-     * @return 추가한 재고
+     * @param location
+     * @param inventoryName
+     * @param inventoryQuantity
+     * @param brandName
+     * @param purchaseLocation
+     * @return 추가한 재고ID
      */
-    Inventory addInventory(Inventory inventory);
-
-    /**
-     * 재고 정보를 업데이트합니다.
-     *
-     * @param inventory 업데이트할 재고 객체
-     * @return 업데이트된 재고 객체
-     */
-    Inventory updateInventory(Inventory inventory);
+    InventoryId addInventory(
+            String inventoryName,
+            int inventoryQuantity,
+            int locationId,
+            String brandName,
+            String purchaseLocation);
 }

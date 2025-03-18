@@ -1,7 +1,6 @@
 package me.mason.management.application;
 
 import me.mason.fake.FakeInventoryRepository;
-import me.mason.management.domain.model.InventoryFactory;
 import me.mason.management.infrastructure.adapter.in.web.command.PurchaseNewInventoryCommand;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
@@ -41,7 +40,7 @@ class InventoryPurchaserUnitTest {
     @Test
     void purchaseExistInventory() {
         Map<InventoryId, Inventory> inventoryMap = new HashMap<>();
-        inventoryMap.put(InventoryId.of(1L), InventoryFactory.withId(InventoryId.of(1L), "test", 1, 1L, "", "", LocalDateTime.now(), null));
+        inventoryMap.put(InventoryId.of(1L), Inventory.withId(InventoryId.of(1L), "test", 1, 1, "", "", LocalDateTime.now()));
         FakeInventoryRepository fakeInventoryRepository = new FakeInventoryRepository(inventoryMap);
         purchaseInventoryInput = new InventoryPurchaser(fakeInventoryRepository);
 
@@ -51,7 +50,7 @@ class InventoryPurchaserUnitTest {
 
         Assertions.assertThat(actual).isNotNull();
         Assertions.assertThat(actual.getItemName()).isEqualTo("test");
-        Assertions.assertThat(actual.getQuantity()).isEqualTo(2L);
+        Assertions.assertThat(actual.getQuantity()).isEqualTo(2);
         Assertions.assertThat(actual.getInventoryId()).isNotNull();
 
     }
@@ -60,7 +59,7 @@ class InventoryPurchaserUnitTest {
     @Test
     void purchaseInventoryQuantityZero_throwException() {
         Map<InventoryId, Inventory> inventoryMap = new HashMap<>();
-        inventoryMap.put(InventoryId.of(1L), InventoryFactory.withId(InventoryId.of(1L), "test", 1, 1L, "", "", LocalDateTime.now(), null));
+        inventoryMap.put(InventoryId.of(1L), Inventory.withId(InventoryId.of(1L), "test", 1, 1, "", "", LocalDateTime.now()));
         FakeInventoryRepository fakeInventoryRepository = new FakeInventoryRepository(inventoryMap);
         purchaseInventoryInput = new InventoryPurchaser(fakeInventoryRepository);
 

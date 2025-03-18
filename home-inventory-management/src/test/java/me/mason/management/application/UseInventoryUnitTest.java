@@ -7,7 +7,6 @@ import me.mason.management.domain.exception.NotEnoughStockException;
 import me.mason.management.domain.exception.NotFindStockException;
 import me.mason.management.application.ports.in.UseInventoryInput;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
-import me.mason.management.domain.model.InventoryFactory;
 import me.mason.management.domain.service.UseInventory;
 import org.junit.jupiter.api.*;
 
@@ -25,8 +24,8 @@ class UseInventoryUnitTest {
     @BeforeEach
     void setUp() {
         Map<InventoryId, Inventory> idInventoryMap = new HashMap<>();
-        idInventoryMap.put(InventoryId.of(1L), InventoryFactory.withId(InventoryId.of(1L), "1번상품", 100, 1L, "", "", LocalDateTime.now(), null));
-        idInventoryMap.put(InventoryId.of(2L), InventoryFactory.withId(InventoryId.of(2L), "2번상품", 100, 1L, "", "", LocalDateTime.now(), null));
+        idInventoryMap.put(InventoryId.of(1L), Inventory.withId(InventoryId.of(1L), "1번상품", 100, 1, "", "", LocalDateTime.now()));
+        idInventoryMap.put(InventoryId.of(2L), Inventory.withId(InventoryId.of(2L), "2번상품", 100, 1, "", "", LocalDateTime.now()));
         modifyInventoryStateOutput = new FakeInventoryRepository(idInventoryMap);
         useInventory = new UseInventory(modifyInventoryStateOutput);
     }
@@ -39,7 +38,7 @@ class UseInventoryUnitTest {
 
         Inventory inventory = modifyInventoryStateOutput.loadByInventoryId(InventoryId.of(1L))
                 .orElseThrow();
-        long actualValue = inventory.getQuantity().value();
+        int actualValue = inventory.getQuantity();
         Assertions.assertEquals(99, actualValue);
     }
 

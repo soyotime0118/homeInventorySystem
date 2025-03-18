@@ -1,6 +1,5 @@
 package me.mason.management.adapter.out.persistent;
 
-import me.mason.management.domain.model.Inventory;
 import me.mason.management.infrastructure.adapter.out.persistent.InventoryPersistentAdapter;
 import me.mason.management.infrastructure.adapter.out.persistent.entity.InventoryEntity;
 import me.mason.management.infrastructure.adapter.out.persistent.mapper.InventoryMapper;
@@ -50,9 +49,9 @@ class InventoryPersistentRepositoryTest {
     void addInventory() {
         when(inventoryJpaRepository.save(any(InventoryEntity.class))).thenReturn(mockInventoryEntity);
 
-//        Inventory inventory = inventoryPersistentAdapter.addInventory();
+        InventoryId inventoryId = inventoryPersistentAdapter.addInventory("name", 1, 1, "brandName", "purchaseLocation");
 
 
-//        Assertions.assertThat(inventory).isNotNull();
+        Assertions.assertThat(inventoryId).isNotNull();
     }
 }

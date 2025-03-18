@@ -1,6 +1,5 @@
 package me.mason.management.infrastructure.adapter.out.persistent;
 
-import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,16 +18,16 @@ class InventoryPersistentAdapterIntegrationTest {
     private static final int INITIAL_LOCATION_ID = 1;
     private static final String TEST_ITEM_NAME = "Test Item";
 
-//    @Test
-//    void testSaveInventory() {
-//        Inventory savedInventory = inventoryPersistentAdapter.addInventory(
-//                TEST_ITEM_NAME,
-//                INITIAL_QUANTITY,
-//                INITIAL_LOCATION_ID,
-//                "brandName",
-//                "purchaseLocation");
-//        Assertions.assertThat(savedInventory).isNotNull();
-//    }
+    @Test
+    void testSaveInventory() {
+        InventoryId savedInventoryId = inventoryPersistentAdapter.addInventory(
+                TEST_ITEM_NAME,
+                INITIAL_QUANTITY,
+                INITIAL_LOCATION_ID,
+                "brandName",
+                "purchaseLocation");
+        Assertions.assertThat(savedInventoryId).isNotNull();
+    }
 
 
 }
