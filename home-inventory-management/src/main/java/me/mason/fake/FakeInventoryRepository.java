@@ -50,4 +50,9 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
         return null;
     }
 
+    @Override
+    public void deleteInventory(InventoryId inventoryId) {
+       idInventoryMap.remove(inventoryId);
+    }
+
 }

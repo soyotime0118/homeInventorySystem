@@ -1,7 +1,6 @@
 package me.mason.management.domain.model;
 
 import lombok.*;
-import me.mason.management.application.ports.in.dto.UpdateInventoryCommand;
 import me.mason.management.domain.exception.NotEnoughStockException;
 
 import java.time.LocalDateTime;
@@ -48,6 +47,9 @@ public class Inventory {
      * @throws NotEnoughStockException 재고가 부족할 경우 발생
      */
     public void use(int useQuantity) {
+        if (isExpired()) {
+            throw new IllegalStateException("");
+        }
         Quantity requestedQuantity = Quantity.of(useQuantity);
         if (this.quantity.isLessThan(requestedQuantity)) {
             throw new NotEnoughStockException(inventoryId, useQuantity);
@@ -83,11 +85,16 @@ public class Inventory {
                '}';
     }
 
-    public void change(UpdateInventoryCommand command) {
-        this.itemName = command.itemName();
-        this.brand = command.brand();
-        this.purchaseLocation = command.purchaseLocation();
-        this.locationId = command.locationId();
+    public void changeDetail(
+            String itemName,
+            String brand,
+            String purchaseLocation,
+            Integer locationId
+    ) {
+        this.itemName = itemName;
+        this.brand = brand;
+        this.purchaseLocation = purchaseLocation;
+        this.locationId = locationId;
     }
 
     @Value(staticConstructor = "of")

@@ -51,7 +51,11 @@ public class InventoryManager implements ManageInventoryInput {
 
         Inventory inventory = inventoryPersistentRepository.loadByInventoryId(InventoryId.of(command.inventoryId()))
                 .orElseThrow();
-        inventory.change(command);
+        inventory.changeDetail(
+                command.itemName(),
+                command.brand(),
+                command.purchaseLocation(),
+                command.locationId());
         return inventoryPersistentRepository.updateInventory(inventory);
     }
 
@@ -62,6 +66,6 @@ public class InventoryManager implements ManageInventoryInput {
      */
     @Override
     public void deleteInventory(InventoryId inventoryId) {
-
+        inventoryPersistentRepository.deleteInventory(inventoryId);
     }
 }
