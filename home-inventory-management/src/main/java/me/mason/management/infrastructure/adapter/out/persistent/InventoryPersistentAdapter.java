@@ -57,8 +57,9 @@ public class InventoryPersistentAdapter implements ModifyInventoryStateOutput {
         return inventoryMapper.mapToDomain(inventoryJpaRepository.save(inventoryEntity));
     }
 
-    private LocalDateTime getCurrentTime() {
-        return LocalDateTime.now();
+    @Override
+    public void deleteInventory(InventoryId inventoryId) {
+        inventoryJpaRepository.deleteById(inventoryId.getValue());
     }
 
     public List<Inventory> loadByContainingInventoryName(String inventoryName) {

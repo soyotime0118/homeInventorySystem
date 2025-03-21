@@ -5,17 +5,17 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import me.mason.management.application.ports.in.dto.UpdateInventoryCommand;
-import me.mason.management.infrastructure.adapter.in.web.command.PurchaseNewInventoryCommand;
-import me.mason.management.infrastructure.adapter.in.web.response.InventoryResponse;
-import me.mason.management.infrastructure.adapter.out.persistent.InventoryPersistentAdapter;
-import me.mason.management.domain.model.Inventory;
-import me.mason.management.domain.model.Inventory.InventoryId;
 import me.mason.management.application.ports.in.PurchaseInventoryInput;
 import me.mason.management.application.ports.in.UseInventoryInput;
 import me.mason.management.application.ports.in.dto.RegisterInventoryCommand;
+import me.mason.management.application.ports.in.dto.UpdateInventoryCommand;
+import me.mason.management.domain.model.Inventory.InventoryId;
 import me.mason.management.domain.service.InventoryManager;
+import me.mason.management.infrastructure.adapter.in.web.command.PurchaseNewInventoryCommand;
+import me.mason.management.infrastructure.adapter.in.web.response.InventoryResponse;
+import me.mason.management.infrastructure.adapter.out.persistent.InventoryPersistentAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -70,8 +70,9 @@ public class InventoryRestController {
 
     @Operation(summary = "상품 이름검색")
     @GetMapping("/search/like")
-    public List<Inventory> loadByContainingInventoryName(@RequestParam String keyword) {
-        return inventoryPersistentAdapter.loadByContainingInventoryName(keyword);
+    public List<InventoryResponse> loadByContainingInventoryName(@RequestParam String keyword) {
+        return inventoryPersistentAdapter.loadByContainingInventoryName(keyword)
+                .stream().map(InventoryResponse::from).toList();
     }
 
     @Operation(
@@ -83,7 +84,7 @@ public class InventoryRestController {
                             description = "등록된 재고 정보 반환",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = Inventory.class)
+                                    schema = @Schema(implementation = InventoryResponse.class)
                             )
                     ),
                     @ApiResponse(
@@ -104,5 +105,11 @@ public class InventoryRestController {
     @PutMapping("/update")
     public InventoryResponse updateInventory(@Parameter @RequestBody UpdateInventoryCommand command) {
         return InventoryResponse.from(inventoryManager.updateInventory(command));
+    }
+
+    @DeleteMapping("/{inventoryId}")
+    public ResponseEntity<String> deleteInventory(@PathVariable Long inventoryId) {
+        inventoryManager.deleteInventory(InventoryId.of(inventoryId));
+        return ResponseEntity.ok().build();
     }
 }

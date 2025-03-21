@@ -32,4 +32,11 @@ public interface ModifyInventoryStateOutput {
      * @return 업데이트된 재고 객체
      */
     Inventory updateInventory(Inventory inventory);
+
+    /**
+     * 주어진 인벤토리 ID를 사용하여 해당 인벤토리를 삭제합니다.
+     *
+     * @param inventoryId 삭제할 인벤토리의 고유 ID
+     */
+    void deleteInventory(InventoryId inventoryId);
 }
