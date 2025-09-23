@@ -16,6 +16,7 @@ public class Inventory {
     private String brand;
     private String purchaseLocation;
     private LocalDateTime lastPurchase;
+    private LocalDateTime lastUsedDate;
     private LocalDateTime expiryDate;
 
     @Builder(toBuilder = true)
@@ -27,6 +28,7 @@ public class Inventory {
             String brand,
             String purchaseLocation,
             LocalDateTime lastPurchase,
+            LocalDateTime lastUsedDate,
             LocalDateTime expiryDate
     ) {
         this.inventoryId = inventoryId;
@@ -36,6 +38,7 @@ public class Inventory {
         this.brand = brand;
         this.purchaseLocation = purchaseLocation;
         this.lastPurchase = lastPurchase;
+        this.lastUsedDate = lastUsedDate;
         this.expiryDate = expiryDate;
     }
 
@@ -55,6 +58,7 @@ public class Inventory {
             throw new NotEnoughStockException(inventoryId, useQuantity);
         }
         this.quantity = this.quantity.subtract(Quantity.of(useQuantity));
+        this.lastUsedDate = LocalDateTime.now();
     }
 
     /**

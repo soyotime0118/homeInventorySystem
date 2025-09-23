@@ -34,5 +34,7 @@ public class InventoryEntity {
 
     private LocalDateTime purchaseDate;
 
+    private LocalDateTime lastUsedDate;
+
     private LocalDateTime expiryDate;
 }
