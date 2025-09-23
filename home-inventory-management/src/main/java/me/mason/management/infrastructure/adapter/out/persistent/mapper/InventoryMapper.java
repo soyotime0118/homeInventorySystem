@@ -21,6 +21,7 @@ public class InventoryMapper {
                         inventoryEntity.getBrand(),
                         inventoryEntity.getPurchaseLocation(),
                         inventoryEntity.getPurchaseDate(),
+                        inventoryEntity.getLastUsedDate(),
                         inventoryEntity.getExpiryDate()
                 );
     }
@@ -38,6 +39,7 @@ public class InventoryMapper {
                 inventory.getBrand(),
                 inventory.getPurchaseLocation(),
                 inventory.getLastPurchase(),
+                inventory.getLastUsedDate(),
                 inventory.getExpiryDate()
         );
     }

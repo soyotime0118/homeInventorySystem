@@ -70,6 +70,7 @@ CREATE TABLE items
     brand             VARCHAR(50),
     purchase_location VARCHAR(100),
     purchase_date     DATE,
+    last_used_date    DATE,
     expiry_date       DATE,
     quantity          INT DEFAULT 0,
     location_id       INT
@@ -89,6 +90,8 @@ COMMENT
 ON COLUMN items.purchase_date IS '물품 구매 날짜';
 COMMENT
 ON COLUMN items.expiry_date IS '물품 유통기한';
+COMMENT
+ON COLUMN items.last_used_date IS '최종 사용일';
 COMMENT
 ON COLUMN items.quantity IS '물품 수량';
 COMMENT

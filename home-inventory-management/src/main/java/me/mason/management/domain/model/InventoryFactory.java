@@ -40,6 +40,7 @@ public class InventoryFactory {
             String brand,
             String purchaseLocation,
             LocalDateTime lastPurchase,
+            LocalDateTime lastUsedDate,
             LocalDateTime expiryDate
 
     ) {
@@ -49,6 +50,7 @@ public class InventoryFactory {
                 .locationId(locationId)
                 .brand(brand)
                 .purchaseLocation(purchaseLocation)
+                .lastUsedDate(lastUsedDate)
                 .lastPurchase(lastPurchase)
                 .expiryDate(expiryDate);
         if (Objects.nonNull(inventoryId)) {
@@ -77,6 +79,7 @@ public class InventoryFactory {
             String brandName,
             String purchaseLocation,
             LocalDateTime lastPurchase,
+            LocalDateTime lastUsedDate,
             LocalDateTime expiryDate
     ) {
         return defaultBuilder(
@@ -87,6 +90,7 @@ public class InventoryFactory {
                 brandName,
                 purchaseLocation,
                 lastPurchase,
+                lastUsedDate,
                 expiryDate)
                 .build();
     }
