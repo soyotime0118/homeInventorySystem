@@ -1,10 +1,9 @@
 package me.mason.fake;
 
+import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
-import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,7 +52,12 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
 
     @Override
     public void deleteInventory(InventoryId inventoryId) {
-       idInventoryMap.remove(inventoryId);
+        idInventoryMap.remove(inventoryId);
+    }
+
+    @Override
+    public boolean existsById(InventoryId inventoryId) {
+        return idInventoryMap.containsKey(inventoryId);
     }
 
 }

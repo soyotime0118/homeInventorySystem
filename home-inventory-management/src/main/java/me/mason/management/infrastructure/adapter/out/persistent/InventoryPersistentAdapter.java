@@ -1,17 +1,15 @@
 package me.mason.management.infrastructure.adapter.out.persistent;
 
-import me.mason.management.domain.model.Inventory.InventoryBuilder;
-import me.mason.management.infrastructure.adapter.out.persistent.mapper.InventoryMapper;
-import me.mason.management.infrastructure.adapter.out.persistent.entity.InventoryEntity;
-import me.mason.management.infrastructure.adapter.out.persistent.repository.InventoryJpaRepository;
+import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
-import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
+import me.mason.management.infrastructure.adapter.out.persistent.entity.InventoryEntity;
+import me.mason.management.infrastructure.adapter.out.persistent.mapper.InventoryMapper;
+import me.mason.management.infrastructure.adapter.out.persistent.repository.InventoryJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,6 +58,11 @@ public class InventoryPersistentAdapter implements ModifyInventoryStateOutput {
     @Override
     public void deleteInventory(InventoryId inventoryId) {
         inventoryJpaRepository.deleteById(inventoryId.getValue());
+    }
+
+    @Override
+    public boolean existsById(InventoryId inventoryId) {
+        return inventoryJpaRepository.existsById(inventoryId.getValue());
     }
 
     public List<Inventory> loadByContainingInventoryName(String inventoryName) {

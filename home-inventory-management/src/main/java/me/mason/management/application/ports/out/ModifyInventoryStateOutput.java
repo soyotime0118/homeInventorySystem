@@ -39,4 +39,12 @@ public interface ModifyInventoryStateOutput {
      * @param inventoryId 삭제할 인벤토리의 고유 ID
      */
     void deleteInventory(InventoryId inventoryId);
+
+    /**
+     * 주어진 인벤토리 ID를 사용하여 해당 인벤토리가 존재하는지 확인합니다.
+     *
+     * @param inventoryId 확인할 인벤토리의 고유 ID
+     * @return 인벤토리가 존재하면 true, 그렇지 않으면 false
+     */
+    boolean existsById(InventoryId inventoryId);
 }

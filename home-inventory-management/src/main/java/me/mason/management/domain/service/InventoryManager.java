@@ -5,6 +5,7 @@ import me.mason.management.application.ports.in.ManageInventoryInput;
 import me.mason.management.application.ports.in.dto.RegisterInventoryCommand;
 import me.mason.management.application.ports.in.dto.UpdateInventoryCommand;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
+import me.mason.management.domain.exception.NotFindStockException;
 import me.mason.management.domain.model.InventoryFactory;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
@@ -68,6 +69,14 @@ public class InventoryManager implements ManageInventoryInput {
      */
     @Override
     public void deleteInventory(InventoryId inventoryId) {
+        if (inventoryId == null || inventoryId.getValue() == null) {
+            throw new IllegalArgumentException("인벤토리 ID는 null일 수 없습니다");
+        }
+
+        boolean exists = inventoryPersistentRepository.existsById(inventoryId);
+        if (!exists) {
+            throw new NotFindStockException(inventoryId);
+        }
         inventoryPersistentRepository.deleteInventory(inventoryId);
     }
 }
