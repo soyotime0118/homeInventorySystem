@@ -47,7 +47,8 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
 
     @Override
     public Inventory updateInventory(Inventory inventory) {
-        return null;
+        idInventoryMap.put(inventory.getInventoryId(), inventory);
+        return inventory;
     }
 
     @Override

@@ -127,6 +127,7 @@ public class InventoryFactory {
                 brandName,
                 purchaseLocation,
                 lastPurchase,
+                null,
                 expiryDate
         );
     }
