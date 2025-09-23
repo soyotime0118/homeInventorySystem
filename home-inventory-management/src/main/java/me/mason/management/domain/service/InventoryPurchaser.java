@@ -30,14 +30,16 @@ public class InventoryPurchaser implements PurchaseInventoryInput {
 
     @Override
     public InventoryId purchaseNewInventory(PurchaseNewInventoryCommand command) {
-
-//        return inventoryPersistentRepository.addInventory(
-//                command.getName(),
-//                command.getQuantity(),
-//                command.getLocationId(),
-//                command.getBrandName(),
-//                command.getPurchaseLocation()).getInventoryId();
-        return null;
+        Inventory newInventory = Inventory.builder()
+                .itemName(command.getName())
+                .quantity(Inventory.Quantity.of(command.getQuantity()))
+                .locationId((long) command.getLocationId())
+                .brand(command.getBrandName())
+                .purchaseLocation(command.getPurchaseLocation())
+                .lastPurchase(java.time.LocalDateTime.now())
+                .build();
+        Inventory saved = inventoryPersistentRepository.addInventory(newInventory);
+        return saved.getInventoryId();
     }
 
 }
