@@ -72,10 +72,16 @@ public class Inventory {
     }
 
     public boolean isExpired() {
+        if (expiryDate == null) {
+            return false;
+        }
         return LocalDateTime.now().isAfter(expiryDate);
     }
 
     public boolean isExpiringSoon(int daysThreshold) {
+        if (expiryDate == null) {
+            return false;
+        }
         return LocalDateTime.now().plusDays(daysThreshold).isAfter(expiryDate);
     }
 
@@ -93,12 +99,20 @@ public class Inventory {
             String itemName,
             String brand,
             String purchaseLocation,
-            Integer locationId
+            Integer locationId,
+            LocalDateTime purchaseDate,
+            LocalDateTime expiryDate
     ) {
         this.itemName = itemName;
         this.brand = brand;
         this.purchaseLocation = purchaseLocation;
         this.locationId = locationId;
+        if (purchaseDate != null) {
+            this.lastPurchase = purchaseDate;
+        }
+        if (expiryDate != null) {
+            this.expiryDate = expiryDate;
+        }
     }
 
     @Value(staticConstructor = "of")

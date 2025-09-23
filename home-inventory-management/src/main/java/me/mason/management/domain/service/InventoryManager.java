@@ -55,7 +55,9 @@ public class InventoryManager implements ManageInventoryInput {
                 command.itemName(),
                 command.brand(),
                 command.purchaseLocation(),
-                command.locationId());
+                command.locationId(),
+                command.purchaseDate(),
+                command.expiryDate());
         return inventoryPersistentRepository.updateInventory(inventory);
     }
 

@@ -51,7 +51,7 @@ class InventoryPurchaserUnitTest {
 
         Assertions.assertThat(actual).isNotNull();
         Assertions.assertThat(actual.getItemName()).isEqualTo("test");
-        Assertions.assertThat(actual.getQuantity()).isEqualTo(2L);
+        Assertions.assertThat(actual.getQuantity().value()).isEqualTo(2L);
         Assertions.assertThat(actual.getInventoryId()).isNotNull();
 
     }
