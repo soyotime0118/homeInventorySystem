@@ -3,6 +3,7 @@ package me.mason.management.application.ports.out;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ModifyInventoryStateOutput {
@@ -47,4 +48,11 @@ public interface ModifyInventoryStateOutput {
      * @return 인벤토리가 존재하면 true, 그렇지 않으면 false
      */
     boolean existsById(InventoryId inventoryId);
+
+    // Query and specific operations
+    List<Inventory> loadByContainingInventoryName(String inventoryName);
+
+    List<Inventory> loadByLocationId(Long locationId);
+
+    Optional<Inventory> updateInventoryLocation(Long inventoryId, Long locationId);
 }

@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import me.mason.management.application.ports.in.PurchaseInventoryInput;
+import me.mason.management.application.ports.in.SearchInventoryInput;
+import me.mason.management.application.ports.in.UpdateInventoryLocationInput;
 import me.mason.management.application.ports.in.UseInventoryInput;
 import me.mason.management.application.ports.in.dto.RegisterInventoryCommand;
 import me.mason.management.application.ports.in.dto.UpdateInventoryCommand;
@@ -13,7 +15,6 @@ import me.mason.management.domain.model.Inventory.InventoryId;
 import me.mason.management.domain.service.InventoryManager;
 import me.mason.management.infrastructure.adapter.in.web.command.PurchaseNewInventoryCommand;
 import me.mason.management.infrastructure.adapter.in.web.response.InventoryResponse;
-import me.mason.management.infrastructure.adapter.out.persistent.InventoryPersistentAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,9 @@ public class InventoryRestController {
 
     private final PurchaseInventoryInput purchaseInventoryInput;
 
-    private final InventoryPersistentAdapter inventoryPersistentAdapter;
+    private final SearchInventoryInput searchInventoryInput;
+
+    private final UpdateInventoryLocationInput updateInventoryLocationInput;
 
     private final InventoryManager inventoryManager;
 
@@ -37,11 +40,13 @@ public class InventoryRestController {
     public InventoryRestController(
             UseInventoryInput useInventoryInput,
             PurchaseInventoryInput purchaseInventoryInput,
-            InventoryPersistentAdapter inventoryPersistentAdapter,
+            SearchInventoryInput searchInventoryInput,
+            UpdateInventoryLocationInput updateInventoryLocationInput,
             InventoryManager inventoryManager) {
         this.useInventoryInput = useInventoryInput;
         this.purchaseInventoryInput = purchaseInventoryInput;
-        this.inventoryPersistentAdapter = inventoryPersistentAdapter;
+        this.searchInventoryInput = searchInventoryInput;
+        this.updateInventoryLocationInput = updateInventoryLocationInput;
         this.inventoryManager = inventoryManager;
     }
 
@@ -71,8 +76,16 @@ public class InventoryRestController {
     @Operation(summary = "상품 이름검색")
     @GetMapping("/search/like")
     public List<InventoryResponse> loadByContainingInventoryName(@RequestParam String keyword) {
-        return inventoryPersistentAdapter.loadByContainingInventoryName(keyword)
+        return searchInventoryInput.loadByContainingInventoryName(keyword)
                 .stream().map(InventoryResponse::from).toList();
+    }
+
+    @Operation(summary = "보관 위치로 검색")
+    @GetMapping("/search/by-location")
+    public List<InventoryResponse> loadByLocation(@RequestParam Long locationId) {
+        return searchInventoryInput.loadByLocationId(locationId).stream()
+                .map(InventoryResponse::from)
+                .toList();
     }
 
     @Operation(
@@ -105,6 +118,14 @@ public class InventoryRestController {
     @PutMapping("/update")
     public InventoryResponse updateInventory(@Parameter @RequestBody UpdateInventoryCommand command) {
         return InventoryResponse.from(inventoryManager.updateInventory(command));
+    }
+
+    @Operation(summary = "재고 보관 위치 변경")
+    @PutMapping("/{inventoryId}/location/{locationId}")
+    public InventoryResponse updateInventoryLocation(
+            @PathVariable Long inventoryId,
+            @PathVariable Long locationId) {
+        return InventoryResponse.from(updateInventoryLocationInput.updateInventoryLocation(inventoryId, locationId));
     }
 
     @DeleteMapping("/{inventoryId}")

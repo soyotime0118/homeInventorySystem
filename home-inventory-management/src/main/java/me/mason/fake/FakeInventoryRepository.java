@@ -6,8 +6,10 @@ import me.mason.management.domain.model.Inventory.InventoryId;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class FakeInventoryRepository implements ModifyInventoryStateOutput {
 
@@ -60,4 +62,29 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
         return idInventoryMap.containsKey(inventoryId);
     }
 
+    @Override
+    public List<Inventory> loadByContainingInventoryName(String inventoryName) {
+        return idInventoryMap.values().stream()
+                .filter(inv -> inv.getItemName() != null && inv.getItemName().contains(inventoryName))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Inventory> loadByLocationId(Long locationId) {
+        return idInventoryMap.values().stream()
+                .filter(inv -> inv.getLocationId() == Optional.ofNullable(locationId).orElse(-1L))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Inventory> updateInventoryLocation(Long inventoryId, Long locationId) {
+        InventoryId id = InventoryId.of(inventoryId);
+        Inventory current = idInventoryMap.get(id);
+        if (current == null) {
+            return Optional.empty();
+        }
+        Inventory updated = current.toBuilder().locationId(locationId).build();
+        idInventoryMap.put(id, updated);
+        return Optional.of(updated);
+    }
 }

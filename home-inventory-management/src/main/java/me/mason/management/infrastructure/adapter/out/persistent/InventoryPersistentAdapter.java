@@ -30,9 +30,7 @@ public class InventoryPersistentAdapter implements ModifyInventoryStateOutput {
 
     @Override
     public void modifyInventory(Inventory inventory) {
-
         InventoryEntity inventoryEntity = inventoryMapper.mapToJpaEntity(inventory);
-
         inventoryJpaRepository.save(inventoryEntity);
     }
 
@@ -81,5 +79,18 @@ public class InventoryPersistentAdapter implements ModifyInventoryStateOutput {
         return inventoryJpaRepository.findByQuantityLessThanEqual(quantity).stream()
                 .map(inventoryMapper::mapToDomain)
                 .collect(Collectors.toList());
+    }
+
+    public List<Inventory> loadByLocationId(Long locationId) {
+        return inventoryJpaRepository.findByLocationId(locationId).stream()
+                .map(inventoryMapper::mapToDomain)
+                .collect(Collectors.toList());
+    }
+
+    public Optional<Inventory> updateInventoryLocation(Long inventoryId, Long locationId) {
+        return inventoryJpaRepository.findById(inventoryId).map(entity -> {
+            entity.setLocationId(locationId);
+            return inventoryMapper.mapToDomain(inventoryJpaRepository.save(entity));
+        });
     }
 }

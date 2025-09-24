@@ -19,6 +19,9 @@ public interface InventoryJpaRepository extends JpaRepository<InventoryEntity, L
     // 재고가 특정 수치 이하인 아이템을 가져오기
     List<InventoryEntity> findByQuantityLessThanEqual(int quantity);
 
+    // 보관 위치로 검색
+    List<InventoryEntity> findByLocationId(Long locationId);
+
     Optional<InventoryEntity> findById(Long id);
 
 //    List<InventoryEntity> findByCategory(Category category);
