@@ -4,6 +4,7 @@ import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
 import me.mason.management.application.ports.in.UseInventoryInput;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
+import me.mason.management.domain.model.Inventory.Quantity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -49,7 +50,7 @@ class UseInventoryTest {
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(() -> {
                         try {
-                            useInventory.usingInventory(InventoryId.of(2L), 1);
+                            useInventory.usingInventory(InventoryId.of(2L), Quantity.of(1));
                         } finally {
                             latch.countDown();
                         }

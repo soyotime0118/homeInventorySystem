@@ -2,6 +2,7 @@ package me.mason.management.application.ports.in;
 
 import me.mason.management.domain.model.Inventory.InventoryId;
 import me.mason.management.domain.exception.NotEnoughStockException;
+import me.mason.management.domain.model.Inventory.Quantity;
 
 public interface UseInventoryInput {
 
@@ -13,7 +14,7 @@ public interface UseInventoryInput {
      * @return 사용후 잔여수량
      * @throws IllegalArgumentException 수량이 0이하일 경우
      */
-    long usingInventory(InventoryId inventoryId, int quantity);
+    long usingInventory(InventoryId inventoryId, Quantity quantity);
 
 
 }

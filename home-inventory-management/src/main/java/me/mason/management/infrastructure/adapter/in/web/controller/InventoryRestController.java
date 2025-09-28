@@ -11,14 +11,17 @@ import me.mason.management.application.ports.in.UpdateInventoryLocationInput;
 import me.mason.management.application.ports.in.UseInventoryInput;
 import me.mason.management.application.ports.in.dto.RegisterInventoryCommand;
 import me.mason.management.application.ports.in.dto.UpdateInventoryCommand;
+import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.domain.model.Inventory.Quantity;
 import me.mason.management.domain.service.InventoryManager;
-import me.mason.management.infrastructure.adapter.in.web.command.PurchaseNewInventoryCommand;
+import me.mason.management.application.ports.in.dto.PurchaseNewInventoryCommand;
 import me.mason.management.infrastructure.adapter.in.web.response.InventoryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 
 
@@ -52,23 +55,26 @@ public class InventoryRestController {
 
 
     @Operation(summary = "재고사용", description = "존재하는 재고를 사용처리 한다")
-    @PatchMapping("use/{inventoryId}/{quantity}")
-    public void useInventory(
+    @PatchMapping("/use/{inventoryId}/{quantity}")
+    public long useInventory(
             @Parameter(description = "사용하려는 재고ID") @PathVariable Long inventoryId,
             @Parameter(description = "사용수량") @PathVariable Integer quantity) {
-        useInventoryInput.usingInventory(InventoryId.of(inventoryId), quantity);
+        return useInventoryInput.usingInventory(InventoryId.of(inventoryId), Quantity.of(quantity));
     }
 
     @Operation(summary = "기존 재고구입", description = "존재하는 재고를 구입")
-    @PutMapping("purchase/{inventoryId}/{quantity}")
-    public void purchaseInventory(
+    @PutMapping("/purchase/{inventoryId}/{quantity}")
+    public ResponseEntity<InventoryResponse> purchaseInventory(
+            @Parameter(description = "구입할 재고 ID", required = true)
             @PathVariable("inventoryId") Long inventoryId,
-            @PathVariable Integer quantity) {
-        purchaseInventoryInput.purchaseInventory(InventoryId.of(inventoryId), quantity);
+            @Parameter(description = "구입할 수량", required = true)
+            @PathVariable @Min(1) Integer quantity) {
+        Inventory inventory = purchaseInventoryInput.purchaseInventory(InventoryId.of(inventoryId), Quantity.of(quantity));
+        return ResponseEntity.ok(InventoryResponse.from(inventory));
     }
 
     @Operation(summary = "신규 재고구입")
-    @PostMapping("purchase/")
+    @PostMapping("/purchase")
     public void purchaseInventory(@RequestBody PurchaseNewInventoryCommand command) {
         purchaseInventoryInput.purchaseNewInventory(command);
     }

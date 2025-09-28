@@ -7,6 +7,7 @@ import me.mason.management.domain.exception.NotEnoughStockException;
 import me.mason.management.domain.exception.NotFindStockException;
 import me.mason.management.application.ports.in.UseInventoryInput;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
+import me.mason.management.domain.model.Inventory.Quantity;
 import me.mason.management.domain.model.InventoryFactory;
 import me.mason.management.domain.service.UseInventory;
 import org.junit.jupiter.api.*;
@@ -35,7 +36,7 @@ class UseInventoryUnitTest {
     @DisplayName("재고 사용시 차감 테스트")
     @Test
     void useInventoryQuantity() {
-        useInventory.usingInventory(InventoryId.of(1L), 1);
+        useInventory.usingInventory(InventoryId.of(1L), Quantity.of(1));
 
         Inventory inventory = modifyInventoryStateOutput.loadByInventoryId(InventoryId.of(1L))
                 .orElseThrow();
@@ -50,7 +51,7 @@ class UseInventoryUnitTest {
         @Test
         void useInventoryQuantity_overQuantity() {
             Assertions.assertThrowsExactly(NotEnoughStockException.class, () -> {
-                useInventory.usingInventory(InventoryId.of(1L), 101);
+                useInventory.usingInventory(InventoryId.of(1L), Quantity.of(101));
             });
         }
 
@@ -58,7 +59,7 @@ class UseInventoryUnitTest {
         @Test
         void useInventoryQuantity_useQuantity_0() {
             Assertions.assertThrowsExactly(IllegalArgumentException.class, () -> {
-                useInventory.usingInventory(InventoryId.of(1L), 0);
+                useInventory.usingInventory(InventoryId.of(1L), Quantity.ZERO);
             });
         }
 
@@ -66,7 +67,7 @@ class UseInventoryUnitTest {
         @Test
         void notFindStock() {
             Assertions.assertThrowsExactly(NotFindStockException.class, () -> {
-                useInventory.usingInventory(InventoryId.of(3L), 1);
+                useInventory.usingInventory(InventoryId.of(3L), Quantity.of(1));
             });
         }
 

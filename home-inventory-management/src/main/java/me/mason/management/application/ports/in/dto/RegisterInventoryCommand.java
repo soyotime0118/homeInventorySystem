@@ -2,6 +2,7 @@ package me.mason.management.application.ports.in.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
+import me.mason.management.domain.model.Inventory.Quantity;
 
 @Schema(description = "신규 재고 등록을 위한 필수 정보")
 public record RegisterInventoryCommand(
@@ -19,9 +20,7 @@ public record RegisterInventoryCommand(
     }
 
     private void validateQuantity(int quantity) {
-        if (quantity < 0) {
-            throw new IllegalArgumentException("수량은 0보다 작을 수 없습니다");
-        }
+        Quantity.of(quantity);
     }
 
     private void validateItemName(String itemName) {

@@ -1,10 +1,8 @@
 package me.mason.management.domain.exception;
 
-import me.mason.management.domain.model.Inventory.InventoryId;
-
 public class NotEnoughStockException extends RuntimeException {
 
-    public NotEnoughStockException(InventoryId inventoryId, int quantity) {
-        super(String.format("재고가 부족합니다. 상품ID %s, 부족수량 %d ", inventoryId.toString(), quantity));
+    public NotEnoughStockException(long quantity) {
+        super(String.format("재고가 부족합니다. 부족수량 %d ", quantity));
     }
 }

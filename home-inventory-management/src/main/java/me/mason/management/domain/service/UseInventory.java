@@ -5,6 +5,7 @@ import me.mason.management.domain.model.Inventory.InventoryId;
 import me.mason.management.domain.exception.NotFindStockException;
 import me.mason.management.application.ports.in.UseInventoryInput;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
+import me.mason.management.domain.model.Inventory.Quantity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +30,7 @@ public class UseInventory implements UseInventoryInput {
      */
     @Override
     @Transactional
-    public long usingInventory(InventoryId inventoryId, int quantity) {
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("Quantity must be greater than 0");
-        }
+    public long usingInventory(InventoryId inventoryId, Quantity quantity) {
         //id기준으로 Inventory 가져오기
         Inventory inventory = inventoryPersistentRepository.loadByInventoryId(inventoryId)
                 .orElseThrow(() -> new NotFindStockException(inventoryId));

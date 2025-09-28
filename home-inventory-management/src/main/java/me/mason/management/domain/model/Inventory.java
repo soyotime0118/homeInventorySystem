@@ -1,6 +1,7 @@
 package me.mason.management.domain.model;
 
 import lombok.*;
+import me.mason.management.domain.exception.InvalidQuantityException;
 import me.mason.management.domain.exception.NotEnoughStockException;
 
 import java.time.LocalDateTime;
@@ -49,15 +50,14 @@ public class Inventory {
      * @param useQuantity 사용할 수량
      * @throws NotEnoughStockException 재고가 부족할 경우 발생
      */
-    public void use(int useQuantity) {
+    public void use(Quantity useQuantity) {
         if (isExpired()) {
             throw new IllegalStateException("");
         }
-        Quantity requestedQuantity = Quantity.of(useQuantity);
-        if (this.quantity.isLessThan(requestedQuantity)) {
-            throw new NotEnoughStockException(inventoryId, useQuantity);
+        if (this.quantity.isLessThan(useQuantity)) {
+            throw new NotEnoughStockException(useQuantity.asLong());
         }
-        this.quantity = this.quantity.subtract(Quantity.of(useQuantity));
+        this.quantity = this.quantity.subtract(useQuantity);
         this.lastUsedDate = LocalDateTime.now();
     }
 
@@ -66,8 +66,8 @@ public class Inventory {
      *
      * @param quantity 추가할 수량
      */
-    public void plusStock(Integer quantity) {
-        this.quantity = this.quantity.add(Quantity.of(quantity));
+    public void plusStock(Quantity quantity) {
+        this.quantity = this.quantity.add(quantity);
         this.lastPurchase = LocalDateTime.now();
     }
 
@@ -131,7 +131,7 @@ public class Inventory {
 
         public Quantity {
             if (value < 0) {
-                throw new IllegalArgumentException("수량은 0보다 작을 수 없습니다");
+                throw new InvalidQuantityException("수량은 0이상이어야 합니다");
             }
         }
 
@@ -154,7 +154,7 @@ public class Inventory {
 
         public Quantity subtract(Quantity quantity) {
             if (this.value < quantity.value) {
-                throw new IllegalArgumentException("재고가 부족합니다");
+                throw new NotEnoughStockException(quantity.value - this.value);
             }
             return new Quantity(this.value - quantity.value);
         }

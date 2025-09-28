@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import me.mason.management.application.ports.in.ManageInventoryInput;
 import me.mason.management.application.ports.in.dto.RegisterInventoryCommand;
 import me.mason.management.application.ports.in.dto.UpdateInventoryCommand;
+import me.mason.management.application.ports.out.LocationOutput;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
+import me.mason.management.domain.exception.LocationDoesNotExistException;
 import me.mason.management.domain.exception.NotFindStockException;
 import me.mason.management.domain.model.InventoryFactory;
 import me.mason.management.domain.model.Inventory;
@@ -19,9 +21,12 @@ public class InventoryManager implements ManageInventoryInput {
 
     private final ModifyInventoryStateOutput inventoryPersistentRepository;
 
+    private final LocationOutput locationOutput;
+
     @Autowired
-    public InventoryManager(ModifyInventoryStateOutput inventoryPersistentRepository) {
+    public InventoryManager(ModifyInventoryStateOutput inventoryPersistentRepository, LocationOutput locationOutput) {
         this.inventoryPersistentRepository = inventoryPersistentRepository;
+        this.locationOutput = locationOutput;
     }
 
     /**
@@ -35,6 +40,11 @@ public class InventoryManager implements ManageInventoryInput {
     public Inventory registerInventory(RegisterInventoryCommand command) {
 
         Inventory createdInventory = InventoryFactory.createInventory(command);
+
+        boolean isLocationExists = locationOutput.existsById(createdInventory.getLocationId());
+        if (!isLocationExists) {
+            throw new LocationDoesNotExistException();
+        }
 
         return inventoryPersistentRepository.addInventory(createdInventory);
     }
