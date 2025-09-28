@@ -4,6 +4,7 @@ import me.mason.management.application.ports.in.SearchInventoryInput;
 import me.mason.management.application.ports.out.LocationOutput;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import me.mason.management.domain.model.Inventory;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,11 @@ public class InventoryQueryService implements SearchInventoryInput {
 
     @Override
     public List<Inventory> loadByContainingInventoryName(String keyword) {
-        return repository.loadByContainingInventoryName(keyword);
+        if (StringUtils.isBlank(keyword)) {
+            return repository.findAll();
+        } else {
+            return repository.loadByContainingInventoryName(keyword);
+        }
     }
 
     @Override

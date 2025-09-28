@@ -55,4 +55,6 @@ public interface ModifyInventoryStateOutput {
     List<Inventory> loadByLocationId(Long locationId);
 
     Optional<Inventory> updateInventoryLocation(Long inventoryId, Long locationId);
+
+    List<Inventory> findAll();
 }

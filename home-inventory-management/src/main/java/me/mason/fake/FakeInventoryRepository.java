@@ -4,11 +4,7 @@ import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FakeInventoryRepository implements ModifyInventoryStateOutput {
@@ -86,5 +82,10 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
         Inventory updated = current.toBuilder().locationId(locationId).build();
         idInventoryMap.put(id, updated);
         return Optional.of(updated);
+    }
+
+    @Override
+    public List<Inventory> findAll() {
+        return new ArrayList<>(idInventoryMap.values());
     }
 }

@@ -93,4 +93,11 @@ public class InventoryPersistentAdapter implements ModifyInventoryStateOutput {
             return inventoryMapper.mapToDomain(inventoryJpaRepository.save(entity));
         });
     }
+
+    @Override
+    public List<Inventory> findAll() {
+        return inventoryJpaRepository.findAll().stream()
+                .map(inventoryMapper::mapToDomain)
+                .collect(Collectors.toList());
+    }
 }
