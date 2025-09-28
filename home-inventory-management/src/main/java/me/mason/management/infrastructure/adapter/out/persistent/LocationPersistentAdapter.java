@@ -48,6 +48,11 @@ public class LocationPersistentAdapter implements LocationOutput {
         return locationJpaRepository.existsByLocationName(name);
     }
 
+    @Override
+    public boolean existsById(Long locationId) {
+        return locationJpaRepository.existsById(locationId);
+    }
+
     private static Location toDomain(LocationEntity entity) {
         return Location.of(entity.getId(), entity.getLocationName());
     }

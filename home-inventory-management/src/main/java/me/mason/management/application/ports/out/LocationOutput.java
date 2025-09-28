@@ -16,4 +16,6 @@ public interface LocationOutput {
     Optional<Location> getOrCreateByName(String name);
 
     boolean existByLocationName(String name);
+
+    boolean existsById(Long locationId);
 }

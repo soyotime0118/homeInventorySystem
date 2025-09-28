@@ -1,11 +1,13 @@
 package me.mason.management.domain.service;
 
 import me.mason.management.application.ports.in.SearchInventoryInput;
+import me.mason.management.application.ports.out.LocationOutput;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import me.mason.management.domain.model.Inventory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -13,9 +15,15 @@ public class InventoryQueryService implements SearchInventoryInput {
 
     private final ModifyInventoryStateOutput repository;
 
+    private final LocationOutput locationOutput;
+
+
     @Autowired
-    public InventoryQueryService(ModifyInventoryStateOutput repository) {
+    public InventoryQueryService(
+            ModifyInventoryStateOutput repository,
+            LocationOutput locationOutput) {
         this.repository = repository;
+        this.locationOutput = locationOutput;
     }
 
     @Override
@@ -25,6 +33,16 @@ public class InventoryQueryService implements SearchInventoryInput {
 
     @Override
     public List<Inventory> loadByLocationId(Long locationId) {
-        return repository.loadByLocationId(locationId);
+
+        if (locationId == null || !locationOutput.existsById(locationId)) {
+            return Collections.emptyList();
+        }
+
+        List<Inventory> inventories = repository.loadByLocationId(locationId);
+        if (inventories.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            return inventories;
+        }
     }
 }
