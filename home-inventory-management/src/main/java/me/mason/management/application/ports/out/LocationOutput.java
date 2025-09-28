@@ -14,4 +14,6 @@ public interface LocationOutput {
     List<Location> findAll();
 
     Optional<Location> getOrCreateByName(String name);
+
+    boolean existByLocationName(String name);
 }

@@ -24,6 +24,7 @@ public class LocationPersistentAdapter implements LocationOutput {
     public Location registerLocation(String locationName) {
         LocationEntity entity = new LocationEntity();
         entity.setLocationName(locationName);
+
         LocationEntity saved = locationJpaRepository.save(entity);
         return toDomain(saved);
     }
@@ -40,6 +41,11 @@ public class LocationPersistentAdapter implements LocationOutput {
         return locationJpaRepository.findByLocationName(locationName)
                 .map(LocationPersistentAdapter::toDomain)
                 .or(() -> Optional.of(registerLocation(locationName)));
+    }
+
+    @Override
+    public boolean existByLocationName(String name) {
+        return locationJpaRepository.existsByLocationName(name);
     }
 
     private static Location toDomain(LocationEntity entity) {

@@ -12,9 +12,10 @@ import javax.persistence.*;
 public class LocationEntity {
 
     @Id
-    @Column(name = "locationId")
+    @Column(name = "location_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "location_name", nullable = false, unique = true)
     private String locationName;
 }
