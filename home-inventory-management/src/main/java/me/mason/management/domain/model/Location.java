@@ -11,8 +11,10 @@ public class Location {
 
     private String name;
 
-    @Value(staticConstructor = "of")
-    public static class LocationId {
-        Long value;
+    public static Location of(Long id, String name) {
+        return new Location(new LocationId(id), name);
+    }
+
+    public record LocationId(Long value) {
     }
 }
