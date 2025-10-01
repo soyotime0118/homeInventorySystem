@@ -1,8 +1,15 @@
 package me.mason.management.application.ports.in;
 
+import io.swagger.v3.oas.annotations.Operation;
 import me.mason.management.domain.model.Inventory.InventoryId;
 import me.mason.management.domain.exception.NotEnoughStockException;
 import me.mason.management.domain.model.Inventory.Quantity;
+import me.mason.management.infrastructure.adapter.in.web.controller.InventoryRestController;
+import me.mason.management.infrastructure.adapter.in.web.response.InventoryResponse;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 public interface UseInventoryInput {
 

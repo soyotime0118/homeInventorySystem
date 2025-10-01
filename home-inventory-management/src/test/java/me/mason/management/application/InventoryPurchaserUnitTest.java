@@ -30,7 +30,7 @@ class InventoryPurchaserUnitTest {
         purchaseInventoryInput = new InventoryPurchaser(fakeInventoryRepository);
 
         PurchaseNewInventoryCommand command = new PurchaseNewInventoryCommand("test", 1, 1);
-        InventoryId inventoryId = purchaseInventoryInput.purchaseNewInventory(command);
+        InventoryId inventoryId = purchaseInventoryInput.purchaseNewInventory(command).getInventoryId();
 
         Inventory actual = fakeInventoryRepository.loadByInventoryId(inventoryId).orElseThrow();
 

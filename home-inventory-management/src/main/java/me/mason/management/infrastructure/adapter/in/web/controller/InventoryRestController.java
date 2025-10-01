@@ -23,7 +23,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
-import java.util.List;
 
 
 @RequestMapping("inventory")
@@ -34,8 +33,6 @@ public class InventoryRestController {
 
     private final PurchaseInventoryInput purchaseInventoryInput;
 
-    private final SearchInventoryInput searchInventoryInput;
-
     private final UpdateInventoryLocationInput updateInventoryLocationInput;
 
     private final InventoryManager inventoryManager;
@@ -44,12 +41,10 @@ public class InventoryRestController {
     public InventoryRestController(
             UseInventoryInput useInventoryInput,
             PurchaseInventoryInput purchaseInventoryInput,
-            SearchInventoryInput searchInventoryInput,
             UpdateInventoryLocationInput updateInventoryLocationInput,
             InventoryManager inventoryManager) {
         this.useInventoryInput = useInventoryInput;
         this.purchaseInventoryInput = purchaseInventoryInput;
-        this.searchInventoryInput = searchInventoryInput;
         this.updateInventoryLocationInput = updateInventoryLocationInput;
         this.inventoryManager = inventoryManager;
     }
@@ -76,23 +71,9 @@ public class InventoryRestController {
 
     @Operation(summary = "신규 재고구입")
     @PostMapping("/purchase")
-    public void purchaseInventory(@RequestBody PurchaseNewInventoryCommand command) {
-        purchaseInventoryInput.purchaseNewInventory(command);
-    }
-
-    @Operation(summary = "상품 이름검색")
-    @GetMapping("/search/like")
-    public List<InventoryResponse> loadByContainingInventoryName(@RequestParam String keyword) {
-        return searchInventoryInput.loadByContainingInventoryName(keyword)
-                .stream().map(InventoryResponse::from).toList();
-    }
-
-    @Operation(summary = "보관 위치로 검색")
-    @GetMapping("/search/by-location")
-    public List<InventoryResponse> loadByLocation(@RequestParam Long locationId) {
-        return searchInventoryInput.loadByLocationId(new LocationId(locationId)).stream()
-                .map(InventoryResponse::from)
-                .toList();
+    public ResponseEntity<InventoryResponse> purchaseInventory(@RequestBody PurchaseNewInventoryCommand command) {
+        Inventory inventory = purchaseInventoryInput.purchaseNewInventory(command);
+        return ResponseEntity.ok(InventoryResponse.from(inventory));
     }
 
     @Operation(

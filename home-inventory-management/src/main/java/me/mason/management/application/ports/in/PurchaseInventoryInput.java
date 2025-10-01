@@ -20,5 +20,5 @@ public interface PurchaseInventoryInput {
     /**
      * 신규 재고 구입 처리
      */
-    InventoryId purchaseNewInventory(PurchaseNewInventoryCommand command);
+    Inventory purchaseNewInventory(PurchaseNewInventoryCommand command);
 }
