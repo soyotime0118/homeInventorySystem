@@ -37,6 +37,7 @@ public class InventoryQueryService implements SearchInventoryInput {
         }
     }
 
+
     @Override
     public List<Inventory> loadByLocationId(LocationId locationId) {
 

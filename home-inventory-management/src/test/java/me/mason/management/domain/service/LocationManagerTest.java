@@ -1,6 +1,7 @@
 package me.mason.management.domain.service;
 
 import me.mason.management.application.ports.out.LocationOutput;
+import me.mason.management.domain.exception.DuplicateLocationNameException;
 import me.mason.management.domain.model.Location;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

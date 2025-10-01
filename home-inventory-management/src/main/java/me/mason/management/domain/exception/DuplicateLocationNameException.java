@@ -1,4 +1,4 @@
-package me.mason.management.domain.service;
+package me.mason.management.domain.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

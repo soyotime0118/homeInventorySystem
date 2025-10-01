@@ -2,6 +2,7 @@ package me.mason.management.domain.service;
 
 import me.mason.management.application.ports.in.ManageLocationInput;
 import me.mason.management.application.ports.out.LocationOutput;
+import me.mason.management.domain.exception.DuplicateLocationNameException;
 import me.mason.management.domain.model.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
