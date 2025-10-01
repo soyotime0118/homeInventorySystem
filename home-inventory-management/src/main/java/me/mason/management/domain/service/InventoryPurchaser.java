@@ -7,6 +7,7 @@ import me.mason.management.domain.model.Inventory.InventoryId;
 import me.mason.management.application.ports.in.PurchaseInventoryInput;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import me.mason.management.domain.model.Inventory.Quantity;
+import me.mason.management.domain.model.Location.LocationId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,7 @@ public class InventoryPurchaser implements PurchaseInventoryInput {
         Inventory newInventory = Inventory.builder()
                 .itemName(command.getName())
                 .quantity(Inventory.Quantity.of(command.getQuantity()))
-                .locationId(command.getLocationId())
+                .locationId(new LocationId((long) command.getLocationId()))
                 .brand(command.getBrandName())
                 .purchaseLocation(command.getPurchaseLocation())
                 .lastPurchase(java.time.LocalDateTime.now())

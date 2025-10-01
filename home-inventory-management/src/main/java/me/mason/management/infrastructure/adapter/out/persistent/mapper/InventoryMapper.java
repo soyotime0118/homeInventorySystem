@@ -3,6 +3,7 @@ package me.mason.management.infrastructure.adapter.out.persistent.mapper;
 import me.mason.management.domain.model.InventoryFactory;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.domain.model.Location.LocationId;
 import me.mason.management.infrastructure.adapter.out.persistent.entity.InventoryEntity;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ public class InventoryMapper {
                         InventoryId.of(inventoryEntity.getId()),
                         inventoryEntity.getItemName(),
                         inventoryEntity.getQuantity(),
-                        inventoryEntity.getLocationId(),
+                        new LocationId(inventoryEntity.getLocationId()),
                         inventoryEntity.getBrand(),
                         inventoryEntity.getPurchaseLocation(),
                         inventoryEntity.getPurchaseDate(),
@@ -35,7 +36,7 @@ public class InventoryMapper {
                 id,
                 inventory.getItemName(),
                 inventory.getQuantity().asLong(),
-                inventory.getLocationId(),
+                Optional.ofNullable(inventory.getLocationId()).map(LocationId::value).orElse(null),
                 inventory.getBrand(),
                 inventory.getPurchaseLocation(),
                 inventory.getLastPurchase(),

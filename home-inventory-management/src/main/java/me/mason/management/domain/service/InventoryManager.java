@@ -11,6 +11,7 @@ import me.mason.management.domain.exception.NotFindStockException;
 import me.mason.management.domain.model.InventoryFactory;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.domain.model.Location.LocationId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,13 +61,14 @@ public class InventoryManager implements ManageInventoryInput {
     @Transactional
     public Inventory updateInventory(UpdateInventoryCommand command) {
 
-        Inventory inventory = inventoryPersistentRepository.loadByInventoryId(InventoryId.of(command.inventoryId()))
+        Inventory inventory = inventoryPersistentRepository.loadByInventoryId(
+                        InventoryId.of(command.inventoryId()))
                 .orElseThrow();
         inventory.changeDetail(
                 command.itemName(),
                 command.brand(),
                 command.purchaseLocation(),
-                command.locationId(),
+                new LocationId(command.locationId()),
                 command.purchaseDate(),
                 command.expiryDate());
         return inventoryPersistentRepository.updateInventory(inventory);

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public record UpdateInventoryCommand(
         long inventoryId,
         String itemName,
-        Integer locationId,
+        Long locationId,
         String brand,
         String purchaseLocation,
         @Schema(description = "구매일 (ISO-8601)") LocalDateTime purchaseDate,

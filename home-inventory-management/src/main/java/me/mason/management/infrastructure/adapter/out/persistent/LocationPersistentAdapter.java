@@ -2,6 +2,7 @@ package me.mason.management.infrastructure.adapter.out.persistent;
 
 import me.mason.management.application.ports.out.LocationOutput;
 import me.mason.management.domain.model.Location;
+import me.mason.management.domain.model.Location.LocationId;
 import me.mason.management.infrastructure.adapter.out.persistent.entity.LocationEntity;
 import me.mason.management.infrastructure.adapter.out.persistent.repository.LocationJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,9 @@ public class LocationPersistentAdapter implements LocationOutput {
     }
 
     @Override
-    public boolean existsById(Long locationId) {
-        return locationJpaRepository.existsById(locationId);
+    public boolean existsById(LocationId locationId) {
+        if (locationId == null || locationId.value() == null) return false;
+        return locationJpaRepository.existsById(locationId.value());
     }
 
     private static Location toDomain(LocationEntity entity) {

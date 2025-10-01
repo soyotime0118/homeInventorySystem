@@ -3,6 +3,7 @@ package me.mason.fake;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.domain.model.Location.LocationId;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -66,21 +67,20 @@ public class FakeInventoryRepository implements ModifyInventoryStateOutput {
     }
 
     @Override
-    public List<Inventory> loadByLocationId(Long locationId) {
+    public List<Inventory> loadByLocationId(LocationId locationId) {
         return idInventoryMap.values().stream()
-                .filter(inv -> inv.getLocationId() == Optional.ofNullable(locationId).orElse(-1L))
+                .filter(inv -> Objects.equals(inv.getLocationId(), locationId))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Inventory> updateInventoryLocation(Long inventoryId, Long locationId) {
-        InventoryId id = InventoryId.of(inventoryId);
-        Inventory current = idInventoryMap.get(id);
+    public Optional<Inventory> updateInventoryLocation(InventoryId inventoryId, LocationId locationId) {
+        Inventory current = idInventoryMap.get(inventoryId);
         if (current == null) {
             return Optional.empty();
         }
         Inventory updated = current.toBuilder().locationId(locationId).build();
-        idInventoryMap.put(id, updated);
+        idInventoryMap.put(inventoryId, updated);
         return Optional.of(updated);
     }
 

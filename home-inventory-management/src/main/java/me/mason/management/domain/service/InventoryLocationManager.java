@@ -3,6 +3,8 @@ package me.mason.management.domain.service;
 import me.mason.management.application.ports.in.UpdateInventoryLocationInput;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import me.mason.management.domain.model.Inventory;
+import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.domain.model.Location.LocationId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +21,7 @@ public class InventoryLocationManager implements UpdateInventoryLocationInput {
 
     @Override
     @Transactional
-    public Inventory updateInventoryLocation(Long inventoryId, Long locationId) {
+    public Inventory updateInventoryLocation(InventoryId inventoryId, LocationId locationId) {
         return repository.updateInventoryLocation(inventoryId, locationId)
                 .orElseThrow(() -> new IllegalArgumentException("Inventory not found: " + inventoryId));
     }

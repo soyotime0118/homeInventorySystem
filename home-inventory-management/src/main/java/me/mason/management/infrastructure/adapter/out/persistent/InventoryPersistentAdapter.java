@@ -3,6 +3,7 @@ package me.mason.management.infrastructure.adapter.out.persistent;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.domain.model.Location.LocationId;
 import me.mason.management.infrastructure.adapter.out.persistent.entity.InventoryEntity;
 import me.mason.management.infrastructure.adapter.out.persistent.mapper.InventoryMapper;
 import me.mason.management.infrastructure.adapter.out.persistent.repository.InventoryJpaRepository;
@@ -81,15 +82,17 @@ public class InventoryPersistentAdapter implements ModifyInventoryStateOutput {
                 .collect(Collectors.toList());
     }
 
-    public List<Inventory> loadByLocationId(Long locationId) {
-        return inventoryJpaRepository.findByLocationId(locationId).stream()
+    @Override
+    public List<Inventory> loadByLocationId(LocationId locationId) {
+        return inventoryJpaRepository.findByLocationId(locationId.value()).stream()
                 .map(inventoryMapper::mapToDomain)
                 .collect(Collectors.toList());
     }
 
-    public Optional<Inventory> updateInventoryLocation(Long inventoryId, Long locationId) {
-        return inventoryJpaRepository.findById(inventoryId).map(entity -> {
-            entity.setLocationId(locationId);
+    @Override
+    public Optional<Inventory> updateInventoryLocation(InventoryId inventoryId, LocationId locationId) {
+        return inventoryJpaRepository.findById(inventoryId.getValue()).map(entity -> {
+            entity.setLocationId(locationId.value());
             return inventoryMapper.mapToDomain(inventoryJpaRepository.save(entity));
         });
     }

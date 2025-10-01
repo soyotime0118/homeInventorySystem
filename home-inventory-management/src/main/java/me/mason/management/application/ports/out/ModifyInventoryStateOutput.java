@@ -2,6 +2,7 @@ package me.mason.management.application.ports.out;
 
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
+import me.mason.management.domain.model.Location.LocationId;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,9 +53,9 @@ public interface ModifyInventoryStateOutput {
     // Query and specific operations
     List<Inventory> loadByContainingInventoryName(String inventoryName);
 
-    List<Inventory> loadByLocationId(Long locationId);
+    List<Inventory> loadByLocationId(LocationId locationId);
 
-    Optional<Inventory> updateInventoryLocation(Long inventoryId, Long locationId);
+    Optional<Inventory> updateInventoryLocation(InventoryId inventoryId, LocationId locationId);
 
     List<Inventory> findAll();
 }

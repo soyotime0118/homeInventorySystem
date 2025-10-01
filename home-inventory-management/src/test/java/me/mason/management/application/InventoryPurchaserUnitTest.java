@@ -7,6 +7,7 @@ import me.mason.management.application.ports.in.dto.PurchaseNewInventoryCommand;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
 import me.mason.management.application.ports.in.PurchaseInventoryInput;
+import me.mason.management.domain.model.Location.LocationId;
 import me.mason.management.domain.service.InventoryPurchaser;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +43,7 @@ class InventoryPurchaserUnitTest {
     @Test
     void purchaseExistInventory() {
         Map<InventoryId, Inventory> inventoryMap = new HashMap<>();
-        inventoryMap.put(InventoryId.of(1L), InventoryFactory.withId(InventoryId.of(1L), "test", 1, 1L, "", "", LocalDateTime.now(), null, null));
+        inventoryMap.put(InventoryId.of(1L), InventoryFactory.withId(InventoryId.of(1L), "test", 1, new LocationId(1L), "", "", LocalDateTime.now(), null, null));
         FakeInventoryRepository fakeInventoryRepository = new FakeInventoryRepository(inventoryMap);
         purchaseInventoryInput = new InventoryPurchaser(fakeInventoryRepository);
 
@@ -57,24 +58,18 @@ class InventoryPurchaserUnitTest {
 
     }
 
-    @DisplayName("구매수량이 0이면 IllegalArgumentException 발생")
+    @DisplayName("구매수량이 0이면 수량 변동 없음")
     @Test
-    void purchaseInventoryQuantityZero_throwException() {
+    void purchaseInventoryQuantityZero_noChange() {
         Map<InventoryId, Inventory> inventoryMap = new HashMap<>();
-        inventoryMap.put(InventoryId.of(1L), InventoryFactory.withId(InventoryId.of(1L), "test", 1, 1L, "", "", LocalDateTime.now(), null, null));
+        inventoryMap.put(InventoryId.of(1L), InventoryFactory.withId(InventoryId.of(1L), "test", 1, new LocationId(1L), "", "", LocalDateTime.now(), null, null));
         FakeInventoryRepository fakeInventoryRepository = new FakeInventoryRepository(inventoryMap);
         purchaseInventoryInput = new InventoryPurchaser(fakeInventoryRepository);
 
-        Assertions.assertThatCode(() -> {
-            purchaseInventoryInput.purchaseInventory(InventoryId.of(1L), Quantity.ZERO);
-        }).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatCode(() -> purchaseInventoryInput.purchaseInventory(InventoryId.of(1L), Quantity.ZERO))
+                .doesNotThrowAnyException();
 
-//        Inventory actual = fakeInventoryRepository.loadByInventoryId(InventoryId.of(1L)).orElseThrow();
-//
-//        Assertions.assertThat(actual).isNotNull();
-//        Assertions.assertThat(actual.getName()).isEqualTo("test");
-//        Assertions.assertThat(actual.getQuantity()).isEqualTo(2);
-//        Assertions.assertThat(actual.getInventoryId()).isNotNull();
-
+        Inventory actual = fakeInventoryRepository.loadByInventoryId(InventoryId.of(1L)).orElseThrow();
+        Assertions.assertThat(actual.getQuantity().value()).isEqualTo(1L);
     }
 }

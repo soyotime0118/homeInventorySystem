@@ -9,6 +9,7 @@ import me.mason.management.application.ports.in.UseInventoryInput;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import me.mason.management.domain.model.Inventory.Quantity;
 import me.mason.management.domain.model.InventoryFactory;
+import me.mason.management.domain.model.Location.LocationId;
 import me.mason.management.domain.service.UseInventory;
 import org.junit.jupiter.api.*;
 
@@ -26,8 +27,8 @@ class UseInventoryUnitTest {
     @BeforeEach
     void setUp() {
         Map<InventoryId, Inventory> idInventoryMap = new HashMap<>();
-        idInventoryMap.put(InventoryId.of(1L), InventoryFactory.withId(InventoryId.of(1L), "1번상품", 100, 1L, "", "", LocalDateTime.now(), null, null));
-        idInventoryMap.put(InventoryId.of(2L), InventoryFactory.withId(InventoryId.of(2L), "2번상품", 100, 1L, "", "", LocalDateTime.now(), null, null));
+        idInventoryMap.put(InventoryId.of(1L), InventoryFactory.withId(InventoryId.of(1L), "1번상품", 100, new LocationId(1L), "", "", LocalDateTime.now(), null, null));
+        idInventoryMap.put(InventoryId.of(2L), InventoryFactory.withId(InventoryId.of(2L), "2번상품", 100, new LocationId(1L), "", "", LocalDateTime.now(), null, null));
         modifyInventoryStateOutput = new FakeInventoryRepository(idInventoryMap);
         useInventory = new UseInventory(modifyInventoryStateOutput);
     }
@@ -55,12 +56,11 @@ class UseInventoryUnitTest {
             });
         }
 
-        @DisplayName("사용하려는 재고수량이 0 인경우")
+        @DisplayName("사용하려는 재고수량이 0 인경우 수량 변동 없음")
         @Test
-        void useInventoryQuantity_useQuantity_0() {
-            Assertions.assertThrowsExactly(IllegalArgumentException.class, () -> {
-                useInventory.usingInventory(InventoryId.of(1L), Quantity.ZERO);
-            });
+        void useInventoryQuantity_useQuantity_0_noChange() {
+            long remained = useInventory.usingInventory(InventoryId.of(1L), Quantity.ZERO);
+            Assertions.assertEquals(100, remained);
         }
 
         @DisplayName("사용하려는 재고가 존재하지 않으면 예외 발생")

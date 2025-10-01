@@ -3,6 +3,7 @@ package me.mason.management.domain.model;
 import lombok.*;
 import me.mason.management.domain.exception.InvalidQuantityException;
 import me.mason.management.domain.exception.NotEnoughStockException;
+import me.mason.management.domain.model.Location.LocationId;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -13,7 +14,7 @@ public class Inventory {
     private InventoryId inventoryId;
     private String itemName;
     private Quantity quantity;
-    private long locationId;
+    private LocationId locationId;
     private String brand;
     private String purchaseLocation;
     private LocalDateTime lastPurchase;
@@ -25,7 +26,7 @@ public class Inventory {
             InventoryId inventoryId,
             String itemName,
             Quantity quantity,
-            long locationId,
+            LocationId locationId,
             String brand,
             String purchaseLocation,
             LocalDateTime lastPurchase,
@@ -99,7 +100,7 @@ public class Inventory {
             String itemName,
             String brand,
             String purchaseLocation,
-            Integer locationId,
+            LocationId locationId,
             LocalDateTime purchaseDate,
             LocalDateTime expiryDate
     ) {

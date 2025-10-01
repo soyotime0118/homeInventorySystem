@@ -1,6 +1,7 @@
 package me.mason.management.application.ports.out;
 
 import me.mason.management.domain.model.Location;
+import me.mason.management.domain.model.Location.LocationId;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,5 +18,5 @@ public interface LocationOutput {
 
     boolean existByLocationName(String name);
 
-    boolean existsById(Long locationId);
+    boolean existsById(LocationId locationId);
 }

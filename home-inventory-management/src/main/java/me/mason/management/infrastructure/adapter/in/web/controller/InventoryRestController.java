@@ -14,6 +14,7 @@ import me.mason.management.application.ports.in.dto.UpdateInventoryCommand;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
 import me.mason.management.domain.model.Inventory.Quantity;
+import me.mason.management.domain.model.Location.LocationId;
 import me.mason.management.domain.service.InventoryManager;
 import me.mason.management.application.ports.in.dto.PurchaseNewInventoryCommand;
 import me.mason.management.infrastructure.adapter.in.web.response.InventoryResponse;
@@ -89,7 +90,7 @@ public class InventoryRestController {
     @Operation(summary = "보관 위치로 검색")
     @GetMapping("/search/by-location")
     public List<InventoryResponse> loadByLocation(@RequestParam Long locationId) {
-        return searchInventoryInput.loadByLocationId(locationId).stream()
+        return searchInventoryInput.loadByLocationId(new LocationId(locationId)).stream()
                 .map(InventoryResponse::from)
                 .toList();
     }
@@ -131,7 +132,7 @@ public class InventoryRestController {
     public InventoryResponse updateInventoryLocation(
             @PathVariable Long inventoryId,
             @PathVariable Long locationId) {
-        return InventoryResponse.from(updateInventoryLocationInput.updateInventoryLocation(inventoryId, locationId));
+        return InventoryResponse.from(updateInventoryLocationInput.updateInventoryLocation(InventoryId.of(inventoryId), new LocationId(locationId)));
     }
 
     @DeleteMapping("/{inventoryId}")

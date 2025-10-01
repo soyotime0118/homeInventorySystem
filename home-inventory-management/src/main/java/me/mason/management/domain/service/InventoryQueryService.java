@@ -4,6 +4,7 @@ import me.mason.management.application.ports.in.SearchInventoryInput;
 import me.mason.management.application.ports.out.LocationOutput;
 import me.mason.management.application.ports.out.ModifyInventoryStateOutput;
 import me.mason.management.domain.model.Inventory;
+import me.mason.management.domain.model.Location.LocationId;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class InventoryQueryService implements SearchInventoryInput {
     }
 
     @Override
-    public List<Inventory> loadByLocationId(Long locationId) {
+    public List<Inventory> loadByLocationId(LocationId locationId) {
 
         if (locationId == null || !locationOutput.existsById(locationId)) {
             return Collections.emptyList();
