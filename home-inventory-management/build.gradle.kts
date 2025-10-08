@@ -35,6 +35,8 @@ dependencies {
     compileOnly("org.projectlombok:lombok:latest.release")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.projectlombok:lombok:latest.release")
+    testCompileOnly("org.projectlombok:lombok:latest.release")
+    testAnnotationProcessor("org.projectlombok:lombok:latest.release")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

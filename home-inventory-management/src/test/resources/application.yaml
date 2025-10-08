@@ -1,0 +1,9 @@
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: OFF # 실행된 SQL 쿼리 로그
+        type:
+          descriptor:
+            sql:
+              BasicBinder: OFF # 쿼리에 바인딩되는 파라미터 로그

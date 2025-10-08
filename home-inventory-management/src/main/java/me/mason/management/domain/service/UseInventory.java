@@ -1,5 +1,6 @@
 package me.mason.management.domain.service;
 
+import lombok.extern.slf4j.Slf4j;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
 import me.mason.management.domain.exception.NotFindStockException;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+@Slf4j
 @Service
 public class UseInventory implements UseInventoryInput {
 
@@ -37,6 +39,7 @@ public class UseInventory implements UseInventoryInput {
 
         //재고 사용처리
         inventory.use(quantity);
+        log.info("InventoryId {} is used, quantity : {}", inventoryId, quantity);
 
         inventoryPersistentRepository.modifyInventory(inventory);
 

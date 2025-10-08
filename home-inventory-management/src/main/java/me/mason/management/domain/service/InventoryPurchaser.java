@@ -1,5 +1,6 @@
 package me.mason.management.domain.service;
 
+import lombok.extern.slf4j.Slf4j;
 import me.mason.management.application.ports.in.dto.PurchaseNewInventoryCommand;
 import me.mason.management.domain.exception.NotFindStockException;
 import me.mason.management.domain.model.Inventory;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+@Slf4j
 @Service
 public class InventoryPurchaser implements PurchaseInventoryInput {
 
@@ -28,6 +30,7 @@ public class InventoryPurchaser implements PurchaseInventoryInput {
     public Inventory purchaseInventory(InventoryId inventoryId, Quantity quantity) {
         Inventory inventory = inventoryPersistentRepository.loadByInventoryId(inventoryId)
                 .orElseThrow(() -> new NotFindStockException(inventoryId));
+        log.info("InventoryId {} is purchase, quantity : {}", inventoryId, quantity);
         inventory.plusStock(quantity);
         return inventoryPersistentRepository.updateInventory(inventory);
     }
