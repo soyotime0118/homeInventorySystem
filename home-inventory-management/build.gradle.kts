@@ -23,6 +23,7 @@ repositories {
 val MYSQL_CONNECTOR_VERSION = "8.0.33"
 val H2_VERSION = "2.1.212"
 val SPRINGDOC_OPENAPI_UI_VERSION = "1.8.0"
+val JACKSON_VERSION = "2.15.2"
 
 
 dependencies {
@@ -30,6 +31,9 @@ dependencies {
     implementation("com.h2database:h2:$H2_VERSION")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.kafka:spring-kafka")
+    implementation("com.fasterxml.jackson.core:jackson-databind:$JACKSON_VERSION")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$JACKSON_VERSION")
     implementation("org.springdoc:springdoc-openapi-ui:$SPRINGDOC_OPENAPI_UI_VERSION")
     implementation("org.postgresql:postgresql")
     compileOnly("org.projectlombok:lombok:latest.release")
@@ -38,6 +42,7 @@ dependencies {
     testCompileOnly("org.projectlombok:lombok:latest.release")
     testAnnotationProcessor("org.projectlombok:lombok:latest.release")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.kafka:spring-kafka-test")
 }
 
 tasks.withType<Test> {

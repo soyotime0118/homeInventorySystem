@@ -1,6 +1,8 @@
 package me.mason.management.domain.service;
 
 import lombok.extern.slf4j.Slf4j;
+import me.mason.management.application.ports.out.EventPublisher;
+import me.mason.management.domain.event.InventoryUsedEvent;
 import me.mason.management.domain.model.Inventory;
 import me.mason.management.domain.model.Inventory.InventoryId;
 import me.mason.management.domain.exception.NotFindStockException;
@@ -11,17 +13,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 
 @Slf4j
 @Service
 public class UseInventory implements UseInventoryInput {
 
     private final ModifyInventoryStateOutput inventoryPersistentRepository;
+    private final EventPublisher eventPublisher;
 
 
     @Autowired
-    public UseInventory(ModifyInventoryStateOutput inventoryPersistentRepository) {
+    public UseInventory(
+        ModifyInventoryStateOutput inventoryPersistentRepository,
+        EventPublisher eventPublisher
+    ) {
         this.inventoryPersistentRepository = inventoryPersistentRepository;
+        this.eventPublisher = eventPublisher;
     }
 
     /**
@@ -42,6 +50,18 @@ public class UseInventory implements UseInventoryInput {
         log.info("InventoryId {} is used, quantity : {}", inventoryId, quantity);
 
         inventoryPersistentRepository.modifyInventory(inventory);
+
+        // 재고 사용 이벤트 발행
+        InventoryUsedEvent event = InventoryUsedEvent.builder()
+            .inventoryId(inventory.getInventoryId().getValue())
+            .itemName(inventory.getItemName())
+            .usedQuantity(quantity.value())
+            .remainingQuantity(inventory.getQuantity().value())
+            .occurredOn(LocalDateTime.now())
+            .build();
+
+        eventPublisher.publish(event);
+        log.info("Published InventoryUsedEvent for inventoryId: {}", inventoryId);
 
         return inventory.getQuantity().value();
     }
