@@ -1,0 +1,40 @@
+# Git
+.git
+.gitignore
+.github
+
+# IDE
+.idea
+*.iml
+*.iws
+*.ipr
+.vscode
+*.swp
+*.swo
+
+# Build
+**/build/
+**/target/
+**/out/
+**/.gradle/
+**/.gradletasknamecache
+
+# Docs
+docs/
+*.md
+!README.md
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Temporary files
+*.log
+*.tmp
+*.temp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
